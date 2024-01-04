@@ -1,8 +1,16 @@
 #pragma once
 
-#include <QWidget>
+#include <QKeyEvent>
+
+#include "Entity.h"
 
 class PacMan : public Entity
 {
-    
+    Q_OBJECT
+public:
+    PacMan();
+    void keyPressEvent(QKeyEvent *event);
+    void checkCollisions();
+public slots:
+    void update();
 };

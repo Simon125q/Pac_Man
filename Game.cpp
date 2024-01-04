@@ -1,71 +1,91 @@
-#include <iostream>
-#include <QLCDNumber>
-#include <QHBoxLayout>
-#include <QPushButton>
-#include <QApplication>
-#include <QVBoxLayout>
-#include <QWidget>
-#include <QPainter>
-#include <QPaintEvent>
-#include <QTimer>
 #include <QGraphicsScene>
 #include <QGraphicsView>
-#include <QGraphicsRectItem>
-#include "Entity.h"
+#include <QTimer>
+#include <QObject>
+#include <QBrush>
+#include <QImage>
 
+#include "Blinky.h"
+#include "Inky.h"
+#include "Pinky.h"
+#include "Clyde.h"
+#include "Entity.h"
 #include "Game.h"
-//#include "Level.h"
+#include "settings.h"
+#include "Score.h"
+#include "BottomBar.h"
 
 Game::Game(QWidget *parent)
-    :QWidget(parent)
+    :QGraphicsView(parent)
 {
-    setPalette(QPalette(Qt::blue));
-    setAutoFillBackground(true);
 
-    QPushButton *exit = new QPushButton("Exit");
-    exit->setFont(QFont("Times", 18, QFont::Bold));
+    scene = new QGraphicsScene();
+    scene->setSceneRect(0, 0, WIDTH, HEIGHT);
+    setBackgroundBrush(QBrush(Qt::black));
 
-    score = new QLCDNumber(5);
-    score->setSegmentStyle(QLCDNumber::Filled);
+    setScene(scene);
+    setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    setFixedSize(WIDTH, HEIGHT);
 
-    //level = new Level;
-    QGraphicsScene *scene = new QGraphicsScene();
-    Entity *player = new Entity;
-    player->setRect(0, 0, 100, 100);
-    
-    scene->addItem(player);
+    player = new PacMan();
     player->setFlag(QGraphicsItem::ItemIsFocusable);
     player->setFocus();
-    QGraphicsView *view = new QGraphicsView(scene);
+    scene->addItem(player);
 
-    gameLoopTimer = new QTimer(this);
+    createGhosts();
+    resetPositions();
 
-    connect(exit, SIGNAL(clicked()), qApp, SLOT(quit()));
-    connect(gameLoopTimer, SIGNAL(timeout()), this, SLOT(updateGame()));
+    score = new Score();
+    score->setPos(WIDTH / 2, score->y());
+    scene->addItem(score);
 
-    QHBoxLayout *topLayout = new QHBoxLayout;
-    topLayout->addWidget(score);
-    topLayout->addStretch(1);
-    topLayout->addWidget(exit);
+    bottomBar = new BottomBar();
+    bottomBar->setPos(WIDTH / 2, HEIGHT - 40);
+    scene->addItem(bottomBar);
 
-    QVBoxLayout *gameLayout = new QVBoxLayout;
-    gameLayout->addLayout(topLayout);
-    gameLayout->addWidget(view);
+    gameLoopTimer = new QTimer();
+    QObject::connect(gameLoopTimer, SIGNAL(timeout()), this, SLOT(updateGame()));
+    gameLoopTimer->start(25);
 
-    setLayout(gameLayout);
+    show();
+}
 
-    
+void Game::createGhosts()
+{
+    Blinky *blinky = new Blinky();
+    scene->addItem(blinky);
+    ghosts.append(blinky);
 
+    Inky *inky = new Inky();
+    scene->addItem(inky);
+    ghosts.append(inky);
+
+    Pinky *pinky = new Pinky();
+    scene->addItem(pinky);
+    ghosts.append(pinky);
+
+    Clyde *clyde = new Clyde();
+    scene->addItem(clyde);
+    ghosts.append(clyde);
+}
+
+void Game::resetPositions()
+{
+    player->setPos(WIDTH / 4, HEIGHT / 4);
+
+    for (int ghost_index = 0; ghost_index < ghosts.size(); ghost_index++)
+    {
+        ghosts[ghost_index]->setPos(WIDTH / 2 + 50 * ghost_index, HEIGHT / 2);
+    }
 }
 
 void Game::updateGame()
 {
-    //level->updateLevel()
-    update();
-}
+    player->update();
 
-// void Game::paintEvent(QPaintEvent *event)
-// {
-//     QPainter painter(this);
-//     level->drawLevel(painter);
-// }
+    for (int ghost_index = 0; ghost_index < ghosts.size(); ghost_index++)
+    {
+        ghosts[ghost_index]->update();
+    }
+}

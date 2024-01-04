@@ -1,18 +1,31 @@
 #pragma once
 
 #include <QWidget>
+#include <QGraphicsView>
+#include <QGraphicsScene>
+#include <QTimer>
+#include <QList>
 
-class QLCDNumber;
-class Level;
+#include "PacMan.h"
+#include "Ghost.h"
+#include "Score.h"
+#include "BottomBar.h"
 
-class Game : public QWidget
+class Game : public QGraphicsView
 {
     Q_OBJECT
 private:
-    QLCDNumber *score;
-    Level *level;
+    QGraphicsScene *scene;
+    PacMan *player;
+    QList<Ghost *> ghosts;
 
     QTimer *gameLoopTimer;
+    Score *score;
+    BottomBar *bottomBar;
+
+    void createGhosts();
+    void resetPositions();
+    void newGame();
 
 public:
     Game(QWidget *parent = 0);
@@ -20,8 +33,6 @@ public:
 public slots:
     void updateGame();
 
-// protected:
-//     void paintEvent(QPaintEvent *event);
-
-
+friend class Ghost;
+friend class PacMan;
 };
