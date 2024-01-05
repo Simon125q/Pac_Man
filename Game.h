@@ -6,6 +6,7 @@
 #include <QTimer>
 #include <QList>
 
+#include "Board.h"
 #include "PacMan.h"
 #include "Ghost.h"
 #include "Score.h"
@@ -17,6 +18,7 @@ class Game : public QGraphicsView
     Q_OBJECT
 private:
     QGraphicsScene *scene;
+    Board *board;
     PacMan *player;
     QList<Ghost *> ghosts;
 

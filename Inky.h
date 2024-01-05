@@ -7,5 +7,7 @@ class Inky : public Ghost
 {
     Q_OBJECT
 public:
+
     Inky();
+    void getFrames();
 };

@@ -9,7 +9,6 @@ extern Game *game;
 Ghost::Ghost()
     : Entity()
 {
-    setPixmap(QPixmap("resources/sprites/Ghost/RIGHT_2.png"));
     speed = 8;
 }
 
@@ -30,5 +29,6 @@ void Ghost::getDirection()
 void Ghost::update()
 {
     getDirection();
+    animate();
     move();
 }

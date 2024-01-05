@@ -31,7 +31,10 @@ Game::Game(QWidget *parent)
     setFixedSize(WIDTH, HEIGHT);
 
     gameLoopTimer = new QTimer();
-    
+
+    board = new Board();
+    //scene->addItem(board);
+
     player = new PacMan();
     player->setFlag(QGraphicsItem::ItemIsFocusable);
     player->setFocus();

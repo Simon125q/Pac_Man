@@ -18,8 +18,9 @@ extern Game *game;
 
 PacMan::PacMan()
     : Entity() {
-        setPixmap(QPixmap("resources/sprites/PacMan/RIGHT_2.png"));
-        speed = 10;
+        getFrames();
+        setPixmap(right[0]);
+        speed = 8;
     }
 
 void PacMan::keyPressEvent(QKeyEvent *event)
@@ -71,8 +72,25 @@ void PacMan::checkCollisions()
     }
 }
 
+void PacMan::getFrames()
+{
+    up.append(QPixmap("resources/sprites/PacMan/1.png"));
+    up.append(QPixmap("resources/sprites/PacMan/UP_2.png"));
+    up.append(QPixmap("resources/sprites/PacMan/UP_3.png"));
+    down.append(QPixmap("resources/sprites/PacMan/1.png"));
+    down.append(QPixmap("resources/sprites/PacMan/DOWN_2.png"));
+    down.append(QPixmap("resources/sprites/PacMan/DOWN_3.png"));
+    left.append(QPixmap("resources/sprites/PacMan/1.png"));
+    left.append(QPixmap("resources/sprites/PacMan/LEFT_2.png"));
+    left.append(QPixmap("resources/sprites/PacMan/LEFT_3.png"));
+    right.append(QPixmap("resources/sprites/PacMan/1.png"));
+    right.append(QPixmap("resources/sprites/PacMan/RIGHT_2.png"));
+    right.append(QPixmap("resources/sprites/PacMan/RIGHT_3.png"));
+}
+
 void PacMan::update()
 {
     checkCollisions();
+    animate();
     move();
 }

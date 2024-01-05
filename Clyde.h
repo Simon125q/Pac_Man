@@ -8,4 +8,5 @@ class Clyde : public Ghost
     Q_OBJECT
 public:
     Clyde();
+    void getFrames();
 };

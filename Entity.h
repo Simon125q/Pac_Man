@@ -3,15 +3,28 @@
 #include <QWidget>
 #include <QGraphicsPixmapItem>
 #include <QObject>
+#include <QList>
+#include <QPixmap>
 
 class Entity : public QObject, public QGraphicsPixmapItem
 {
+private:
     Q_OBJECT
+    int animationFrame;
+    int timeBetFrame;
+
 public:
     int direction;
     int speed;
 
+    QList<QPixmap> up;
+    QList<QPixmap> down;
+    QList<QPixmap> right;
+    QList<QPixmap> left;
+
     Entity(QGraphicsItem *parent = 0);
+    virtual void getFrames() = 0;
+    void animate();
 
 public slots:
     void move();
