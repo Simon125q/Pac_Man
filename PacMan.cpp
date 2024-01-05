@@ -7,6 +7,8 @@
 #include "Blinky.h"
 #include "Pinky.h"
 #include "Clyde.h"
+#include "Pellet.h"
+#include "BoostPellet.h"
 #include "Game.h"
 #include "PacMan.h"
 #include "Entity.h"
@@ -46,15 +48,26 @@ void PacMan::checkCollisions()
 
     for (int i = 0; i < colliding_items.size(); i++)
     {
-        if (typeid(*(colliding_items[i])) == typeid(Inky) || typeid(*(colliding_items[i])) == typeid(Blinky) ||
+        if (typeid(*(colliding_items[i])) == typeid(Pellet))
+        {
+            game->score->increase(100);
+            delete colliding_items[i];
+        }
+        else if (typeid(*(colliding_items[i])) == typeid(BoostPellet))
+        {
+            game->score->increase(550);
+            delete colliding_items[i];
+        }
+        else if (typeid(*(colliding_items[i])) == typeid(Inky) || typeid(*(colliding_items[i])) == typeid(Blinky) ||
             typeid(*(colliding_items[i])) == typeid(Pinky) || typeid(*(colliding_items[i])) == typeid(Clyde))
         {
             game->bottomBar->decreaseLifes();
-            if(game->bottomBar->getLifes() == 0)
+            if(game->bottomBar->getLifes() < 0)
                 game->newGame();
             else
                 game->resetPositions();
         }
+
     }
 }
 

@@ -10,6 +10,7 @@
 #include "Ghost.h"
 #include "Score.h"
 #include "BottomBar.h"
+#include "BoostPellet.h"
 
 class Game : public QGraphicsView
 {
@@ -25,6 +26,7 @@ private:
 
     void createGhosts();
     void resetPositions();
+    void createPellet();
     void newGame();
 
 public:

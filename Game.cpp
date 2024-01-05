@@ -10,13 +10,15 @@
 #include "Pinky.h"
 #include "Clyde.h"
 #include "Entity.h"
+#include "Pellet.h"
+#include "BoostPellet.h"
 #include "Game.h"
 #include "settings.h"
 #include "Score.h"
 #include "BottomBar.h"
 
 Game::Game(QWidget *parent)
-    :QGraphicsView(parent)
+    : QGraphicsView(parent)
 {
 
     scene = new QGraphicsScene();
@@ -28,6 +30,8 @@ Game::Game(QWidget *parent)
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setFixedSize(WIDTH, HEIGHT);
 
+    gameLoopTimer = new QTimer();
+    
     player = new PacMan();
     player->setFlag(QGraphicsItem::ItemIsFocusable);
     player->setFocus();
@@ -35,6 +39,7 @@ Game::Game(QWidget *parent)
 
     createGhosts();
     resetPositions();
+    createPellet();
 
     score = new Score();
     score->setPos(WIDTH / 2, score->y());
@@ -44,7 +49,7 @@ Game::Game(QWidget *parent)
     bottomBar->setPos(WIDTH / 2, HEIGHT - 40);
     scene->addItem(bottomBar);
 
-    gameLoopTimer = new QTimer();
+    
     QObject::connect(gameLoopTimer, SIGNAL(timeout()), this, SLOT(updateGame()));
     gameLoopTimer->start(25);
 
@@ -78,6 +83,32 @@ void Game::resetPositions()
     {
         ghosts[ghost_index]->setPos(WIDTH / 2 + 50 * ghost_index, HEIGHT / 2);
     }
+}
+
+void Game::createPellet()
+{
+    for (int posX = 0; posX < 20; posX++)
+    {
+        for (int posY = 0; posY < 20; posY++)
+        {
+            if (posX % 5 == 0 && posY % 5 == 0)
+            {
+                BoostPellet *p = new BoostPellet(posX * 40, posY * 40);
+                scene->addItem(p);
+                QObject::connect(gameLoopTimer, SIGNAL(timeout()), p, SLOT(flicker()));
+            }
+            else
+            {
+                Pellet *p = new Pellet(posX * 40, posY * 40);
+                scene->addItem(p);
+            }
+        }
+    }
+}
+
+void Game::newGame()
+{
+    return;
 }
 
 void Game::updateGame()

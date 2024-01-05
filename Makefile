@@ -53,6 +53,7 @@ OBJECTS_DIR   = ./
 ####### Files
 
 SOURCES       = Blinky.cpp \
+		BoostPellet.cpp \
 		BottomBar.cpp \
 		Clyde.cpp \
 		Entity.cpp \
@@ -62,8 +63,10 @@ SOURCES       = Blinky.cpp \
 		Level.cpp \
 		main.cpp \
 		PacMan.cpp \
+		Pellet.cpp \
 		Pinky.cpp \
 		Score.cpp moc_Blinky.cpp \
+		moc_BoostPellet.cpp \
 		moc_Clyde.cpp \
 		moc_Entity.cpp \
 		moc_Game.cpp \
@@ -71,8 +74,10 @@ SOURCES       = Blinky.cpp \
 		moc_Inky.cpp \
 		moc_Level.cpp \
 		moc_PacMan.cpp \
+		moc_Pellet.cpp \
 		moc_Pinky.cpp
 OBJECTS       = Blinky.o \
+		BoostPellet.o \
 		BottomBar.o \
 		Clyde.o \
 		Entity.o \
@@ -82,9 +87,11 @@ OBJECTS       = Blinky.o \
 		Level.o \
 		main.o \
 		PacMan.o \
+		Pellet.o \
 		Pinky.o \
 		Score.o \
 		moc_Blinky.o \
+		moc_BoostPellet.o \
 		moc_Clyde.o \
 		moc_Entity.o \
 		moc_Game.o \
@@ -92,6 +99,7 @@ OBJECTS       = Blinky.o \
 		moc_Inky.o \
 		moc_Level.o \
 		moc_PacMan.o \
+		moc_Pellet.o \
 		moc_Pinky.o
 DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/unix.conf \
@@ -171,6 +179,7 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/yacc.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/lex.prf \
 		Pac_Man.pro Blinky.h \
+		BoostPellet.h \
 		BottomBar.h \
 		Clyde.h \
 		Entity.h \
@@ -179,9 +188,11 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		Inky.h \
 		Level.h \
 		PacMan.h \
+		Pellet.h \
 		Pinky.h \
 		Score.h \
 		settings.h Blinky.cpp \
+		BoostPellet.cpp \
 		BottomBar.cpp \
 		Clyde.cpp \
 		Entity.cpp \
@@ -191,6 +202,7 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		Level.cpp \
 		main.cpp \
 		PacMan.cpp \
+		Pellet.cpp \
 		Pinky.cpp \
 		Score.cpp
 QMAKE_TARGET  = Pac_Man
@@ -376,8 +388,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents Blinky.h BottomBar.h Clyde.h Entity.h Game.h Ghost.h Inky.h Level.h PacMan.h Pinky.h Score.h settings.h $(DISTDIR)/
-	$(COPY_FILE) --parents Blinky.cpp BottomBar.cpp Clyde.cpp Entity.cpp Game.cpp Ghost.cpp Inky.cpp Level.cpp main.cpp PacMan.cpp Pinky.cpp Score.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents Blinky.h BoostPellet.h BottomBar.h Clyde.h Entity.h Game.h Ghost.h Inky.h Level.h PacMan.h Pellet.h Pinky.h Score.h settings.h $(DISTDIR)/
+	$(COPY_FILE) --parents Blinky.cpp BoostPellet.cpp BottomBar.cpp Clyde.cpp Entity.cpp Game.cpp Ghost.cpp Inky.cpp Level.cpp main.cpp PacMan.cpp Pellet.cpp Pinky.cpp Score.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -409,15 +421,21 @@ compiler_moc_predefs_clean:
 moc_predefs.h: /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp
 	g++ -pipe -O2 -Wall -Wextra -dM -E -o moc_predefs.h /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp
 
-compiler_moc_header_make_all: moc_Blinky.cpp moc_Clyde.cpp moc_Entity.cpp moc_Game.cpp moc_Ghost.cpp moc_Inky.cpp moc_Level.cpp moc_PacMan.cpp moc_Pinky.cpp
+compiler_moc_header_make_all: moc_Blinky.cpp moc_BoostPellet.cpp moc_Clyde.cpp moc_Entity.cpp moc_Game.cpp moc_Ghost.cpp moc_Inky.cpp moc_Level.cpp moc_PacMan.cpp moc_Pellet.cpp moc_Pinky.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_Blinky.cpp moc_Clyde.cpp moc_Entity.cpp moc_Game.cpp moc_Ghost.cpp moc_Inky.cpp moc_Level.cpp moc_PacMan.cpp moc_Pinky.cpp
+	-$(DEL_FILE) moc_Blinky.cpp moc_BoostPellet.cpp moc_Clyde.cpp moc_Entity.cpp moc_Game.cpp moc_Ghost.cpp moc_Inky.cpp moc_Level.cpp moc_PacMan.cpp moc_Pellet.cpp moc_Pinky.cpp
 moc_Blinky.cpp: Blinky.h \
 		Ghost.h \
 		Entity.h \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
 	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/simon/Documents/GitHub/Pac_Man/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/simon/Documents/GitHub/Pac_Man -I/home/simon/Documents/GitHub/Pac_Man -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include Blinky.h -o moc_Blinky.cpp
+
+moc_BoostPellet.cpp: BoostPellet.h \
+		Pellet.h \
+		moc_predefs.h \
+		/usr/lib/qt5/bin/moc
+	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/simon/Documents/GitHub/Pac_Man/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/simon/Documents/GitHub/Pac_Man -I/home/simon/Documents/GitHub/Pac_Man -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include BoostPellet.h -o moc_BoostPellet.cpp
 
 moc_Clyde.cpp: Clyde.h \
 		Ghost.h \
@@ -434,8 +452,11 @@ moc_Entity.cpp: Entity.h \
 moc_Game.cpp: Game.h \
 		PacMan.h \
 		Entity.h \
+		Ghost.h \
 		Score.h \
 		BottomBar.h \
+		BoostPellet.h \
+		Pellet.h \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
 	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/simon/Documents/GitHub/Pac_Man/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/simon/Documents/GitHub/Pac_Man -I/home/simon/Documents/GitHub/Pac_Man -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include Game.h -o moc_Game.cpp
@@ -463,6 +484,11 @@ moc_PacMan.cpp: PacMan.h \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
 	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/simon/Documents/GitHub/Pac_Man/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/simon/Documents/GitHub/Pac_Man -I/home/simon/Documents/GitHub/Pac_Man -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include PacMan.h -o moc_PacMan.cpp
+
+moc_Pellet.cpp: Pellet.h \
+		moc_predefs.h \
+		/usr/lib/qt5/bin/moc
+	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/simon/Documents/GitHub/Pac_Man/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/simon/Documents/GitHub/Pac_Man -I/home/simon/Documents/GitHub/Pac_Man -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include Pellet.h -o moc_Pellet.cpp
 
 moc_Pinky.cpp: Pinky.h \
 		Ghost.h \
@@ -492,6 +518,10 @@ Blinky.o: Blinky.cpp Blinky.h \
 		Entity.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Blinky.o Blinky.cpp
 
+BoostPellet.o: BoostPellet.cpp BoostPellet.h \
+		Pellet.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o BoostPellet.o BoostPellet.cpp
+
 BottomBar.o: BottomBar.cpp BottomBar.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o BottomBar.o BottomBar.cpp
 
@@ -510,6 +540,8 @@ Game.o: Game.cpp Blinky.h \
 		Inky.h \
 		Pinky.h \
 		Clyde.h \
+		Pellet.h \
+		BoostPellet.h \
 		Game.h \
 		PacMan.h \
 		Score.h \
@@ -520,9 +552,11 @@ Game.o: Game.cpp Blinky.h \
 Ghost.o: Ghost.cpp Game.h \
 		PacMan.h \
 		Entity.h \
+		Ghost.h \
 		Score.h \
 		BottomBar.h \
-		Ghost.h \
+		BoostPellet.h \
+		Pellet.h \
 		settings.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Ghost.o Ghost.cpp
 
@@ -537,18 +571,30 @@ Level.o: Level.cpp Level.h
 main.o: main.cpp Game.h \
 		PacMan.h \
 		Entity.h \
+		Ghost.h \
 		Score.h \
-		BottomBar.h
+		BottomBar.h \
+		BoostPellet.h \
+		Pellet.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o main.cpp
 
 PacMan.o: PacMan.cpp Ghost.h \
 		Entity.h \
+		Inky.h \
+		Blinky.h \
+		Pinky.h \
+		Clyde.h \
+		Pellet.h \
+		BoostPellet.h \
 		Game.h \
 		PacMan.h \
 		Score.h \
 		BottomBar.h \
 		settings.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o PacMan.o PacMan.cpp
+
+Pellet.o: Pellet.cpp Pellet.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Pellet.o Pellet.cpp
 
 Pinky.o: Pinky.cpp Pinky.h \
 		Ghost.h \
@@ -560,6 +606,9 @@ Score.o: Score.cpp Score.h
 
 moc_Blinky.o: moc_Blinky.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_Blinky.o moc_Blinky.cpp
+
+moc_BoostPellet.o: moc_BoostPellet.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_BoostPellet.o moc_BoostPellet.cpp
 
 moc_Clyde.o: moc_Clyde.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_Clyde.o moc_Clyde.cpp
@@ -581,6 +630,9 @@ moc_Level.o: moc_Level.cpp
 
 moc_PacMan.o: moc_PacMan.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_PacMan.o moc_PacMan.cpp
+
+moc_Pellet.o: moc_Pellet.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_Pellet.o moc_Pellet.cpp
 
 moc_Pinky.o: moc_Pinky.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_Pinky.o moc_Pinky.cpp
