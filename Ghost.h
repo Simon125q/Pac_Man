@@ -1,19 +1,27 @@
 #pragma once
-#include <QString>
-
+#include <QTimer>
 #include "Entity.h"
 
 class Ghost : public Entity
 {
     Q_OBJECT
-
+    QList<QPixmap> frightenedFrames;
+    QTimer *modeTimer;
+    
+    void getFrightenedFrames();
 public:
     int mode;
-    QString ghost_name;
-
+    
     Ghost();
+    void animateFrightened();
     virtual void getFrames() = 0;
+
 public slots:
-    void getDirection();
+    void getChaseDirection();
+    void getFrightenedDirections();
+    void getScatterDirection();
+    void enterChaseMode();
+    void enterFrightenMode();
+    void enterScatterMode();
     void update();
 };

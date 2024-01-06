@@ -454,8 +454,7 @@ moc_Entity.cpp: Entity.h \
 	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/simon/Documents/GitHub/Pac_Man/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/simon/Documents/GitHub/Pac_Man -I/home/simon/Documents/GitHub/Pac_Man -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include Entity.h -o moc_Entity.cpp
 
 moc_Game.cpp: Game.h \
-		Board.h \
-		settings.h \
+		Level.h \
 		PacMan.h \
 		Entity.h \
 		Ghost.h \
@@ -481,6 +480,13 @@ moc_Inky.cpp: Inky.h \
 	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/simon/Documents/GitHub/Pac_Man/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/simon/Documents/GitHub/Pac_Man -I/home/simon/Documents/GitHub/Pac_Man -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include Inky.h -o moc_Inky.cpp
 
 moc_Level.cpp: Level.h \
+		PacMan.h \
+		Entity.h \
+		Ghost.h \
+		Score.h \
+		BottomBar.h \
+		BoostPellet.h \
+		Pellet.h \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
 	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/simon/Documents/GitHub/Pac_Man/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/simon/Documents/GitHub/Pac_Man -I/home/simon/Documents/GitHub/Pac_Man -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include Level.h -o moc_Level.cpp
@@ -544,32 +550,32 @@ Entity.o: Entity.cpp Entity.h \
 		settings.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Entity.o Entity.cpp
 
-Game.o: Game.cpp Blinky.h \
-		Ghost.h \
-		Entity.h \
-		Inky.h \
-		Pinky.h \
-		Clyde.h \
-		Pellet.h \
-		BoostPellet.h \
-		Game.h \
-		Board.h \
-		settings.h \
-		PacMan.h \
-		Score.h \
-		BottomBar.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Game.o Game.cpp
-
-Ghost.o: Ghost.cpp Game.h \
-		Board.h \
-		settings.h \
+Game.o: Game.cpp Level.h \
 		PacMan.h \
 		Entity.h \
 		Ghost.h \
 		Score.h \
 		BottomBar.h \
 		BoostPellet.h \
-		Pellet.h
+		Pellet.h \
+		Blinky.h \
+		Inky.h \
+		Pinky.h \
+		Clyde.h \
+		Game.h \
+		settings.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Game.o Game.cpp
+
+Ghost.o: Ghost.cpp Game.h \
+		Level.h \
+		PacMan.h \
+		Entity.h \
+		Ghost.h \
+		Score.h \
+		BottomBar.h \
+		BoostPellet.h \
+		Pellet.h \
+		settings.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Ghost.o Ghost.cpp
 
 Inky.o: Inky.cpp Inky.h \
@@ -577,12 +583,24 @@ Inky.o: Inky.cpp Inky.h \
 		Entity.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Inky.o Inky.cpp
 
-Level.o: Level.cpp Level.h
+Level.o: Level.cpp Level.h \
+		PacMan.h \
+		Entity.h \
+		Ghost.h \
+		Score.h \
+		BottomBar.h \
+		BoostPellet.h \
+		Pellet.h \
+		Game.h \
+		Blinky.h \
+		Inky.h \
+		Pinky.h \
+		Clyde.h \
+		settings.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Level.o Level.cpp
 
 main.o: main.cpp Game.h \
-		Board.h \
-		settings.h \
+		Level.h \
 		PacMan.h \
 		Entity.h \
 		Ghost.h \
@@ -601,11 +619,11 @@ PacMan.o: PacMan.cpp Ghost.h \
 		Pellet.h \
 		BoostPellet.h \
 		Game.h \
-		Board.h \
-		settings.h \
+		Level.h \
 		PacMan.h \
 		Score.h \
-		BottomBar.h
+		BottomBar.h \
+		settings.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o PacMan.o PacMan.cpp
 
 Pellet.o: Pellet.cpp Pellet.h

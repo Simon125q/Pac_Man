@@ -26,8 +26,9 @@ void Entity::move()
 
 void Entity::animate()
 {
-    if (timeBetFrame % 100 == 0 && timeBetFrame != 0)
+    if (timeBetFrame == 4)
     {
+        timeBetFrame = 0;
         animationFrame++;
         if(direction == UP)
         {
@@ -54,6 +55,6 @@ void Entity::animate()
             setPixmap(left[animationFrame]);
         }
     }
-    else
-        timeBetFrame++;
+    
+    timeBetFrame++;
 }

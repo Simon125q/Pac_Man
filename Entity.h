@@ -10,12 +10,12 @@ class Entity : public QObject, public QGraphicsPixmapItem
 {
 private:
     Q_OBJECT
-    int animationFrame;
-    int timeBetFrame;
-
+    
 public:
     int direction;
     int speed;
+    int animationFrame;
+    int timeBetFrame;
 
     QList<QPixmap> up;
     QList<QPixmap> down;

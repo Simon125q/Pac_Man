@@ -1,5 +1,6 @@
 #include <QKeyEvent>
 #include <QList>
+#include <QTimer>
 #include <iostream>
 
 #include "Ghost.h"
@@ -19,6 +20,8 @@ extern Game *game;
 PacMan::PacMan()
     : Entity() {
         getFrames();
+        getDeathFrames();
+        direction = RIGHT;
         setPixmap(right[0]);
         speed = 8;
     }
@@ -51,25 +54,47 @@ void PacMan::checkCollisions()
     {
         if (typeid(*(colliding_items[i])) == typeid(Pellet))
         {
-            game->score->increase(100);
+            game->level->score->increase(100);
             delete colliding_items[i];
         }
         else if (typeid(*(colliding_items[i])) == typeid(BoostPellet))
         {
-            game->score->increase(550);
+            game->level->score->increase(550);
+            game->level->startFrightenedMode();
             delete colliding_items[i];
         }
         else if (typeid(*(colliding_items[i])) == typeid(Inky) || typeid(*(colliding_items[i])) == typeid(Blinky) ||
             typeid(*(colliding_items[i])) == typeid(Pinky) || typeid(*(colliding_items[i])) == typeid(Clyde))
         {
-            game->bottomBar->decreaseLifes();
-            if(game->bottomBar->getLifes() < 0)
-                game->newGame();
+            if (game->level->ghosts[0]->mode == FRIGHTENED)
+            {
+                //TODO eating ghosts
+            }
             else
-                game->resetPositions();
+            {
+                game->level->bottomBar->decreaseLifes();
+                if(game->level->bottomBar->getLifes() < 0)
+                    game->level->resetPositions();
+                else
+                    game->level->resetPositions();
+            }
         }
-
     }
+}
+
+void PacMan::getDeathFrames()
+{
+    deathFrames.append(QPixmap("resources/sprites/PacMan/death/1.png"));
+    deathFrames.append(QPixmap("resources/sprites/PacMan/death/2.png"));
+    deathFrames.append(QPixmap("resources/sprites/PacMan/death/3.png"));
+    deathFrames.append(QPixmap("resources/sprites/PacMan/death/4.png"));
+    deathFrames.append(QPixmap("resources/sprites/PacMan/death/5.png"));
+    deathFrames.append(QPixmap("resources/sprites/PacMan/death/6.png"));
+    deathFrames.append(QPixmap("resources/sprites/PacMan/death/7.png"));
+    deathFrames.append(QPixmap("resources/sprites/PacMan/death/8.png"));
+    deathFrames.append(QPixmap("resources/sprites/PacMan/death/9.png"));
+    deathFrames.append(QPixmap("resources/sprites/PacMan/death/10.png"));
+    deathFrames.append(QPixmap("resources/sprites/PacMan/death/11.png"));
 }
 
 void PacMan::getFrames()
@@ -86,6 +111,13 @@ void PacMan::getFrames()
     right.append(QPixmap("resources/sprites/PacMan/1.png"));
     right.append(QPixmap("resources/sprites/PacMan/RIGHT_2.png"));
     right.append(QPixmap("resources/sprites/PacMan/RIGHT_3.png"));
+}
+
+void animateDeath()
+{
+    QTimer *animTimer = new QTimer;
+    animTimer->start(100);
+
 }
 
 void PacMan::update()

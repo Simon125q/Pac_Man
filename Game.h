@@ -6,7 +6,7 @@
 #include <QTimer>
 #include <QList>
 
-#include "Board.h"
+#include "Level.h"
 #include "PacMan.h"
 #include "Ghost.h"
 #include "Score.h"
@@ -17,26 +17,15 @@ class Game : public QGraphicsView
 {
     Q_OBJECT
 private:
-    QGraphicsScene *scene;
-    Board *board;
-    PacMan *player;
-    QList<Ghost *> ghosts;
-
-    QTimer *gameLoopTimer;
-    Score *score;
-    BottomBar *bottomBar;
-
-    void createGhosts();
-    void resetPositions();
-    void createPellet();
-    void newGame();
+    Level *level;
 
 public:
     Game(QWidget *parent = 0);
 
-public slots:
-    void updateGame();
+protected:
+    void keyPressEvent(QKeyEvent *event);
 
 friend class Ghost;
 friend class PacMan;
+friend class Level;
 };

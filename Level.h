@@ -1,17 +1,35 @@
 #pragma once
 
-#include <QWidget>
 
-class Level : public QWidget
+#include <QWidget>
+#include <QGraphicsView>
+#include <QGraphicsScene>
+#include <QTimer>
+#include <QList>
+
+#include "PacMan.h"
+#include "Ghost.h"
+#include "Score.h"
+#include "BottomBar.h"
+#include "BoostPellet.h"
+
+class Level : public QGraphicsScene
 {
     Q_OBJECT
-private:
 
 public:
+    PacMan *player;
+    QList<Ghost *> ghosts;
+    QTimer *gameLoopTimer;
+
+    Score *score;
+    BottomBar *bottomBar;
     Level(QWidget *parent = 0);
-
-protected:
-    void paintEvent(QPaintEvent *event);
-
     
+    void createGhosts();
+    void resetPositions();
+    void createPellet();
+    void startFrightenedMode();
+public slots:
+    void updateLevel();    
 };

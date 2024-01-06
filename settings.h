@@ -1,6 +1,8 @@
 #pragma once
 
-
+#define CHASE 1
+#define SCATTER 2
+#define FRIGHTENED 3
 #define TILE_W 16
 #define TILE_H 16
 #define TILE_ROWS 33
