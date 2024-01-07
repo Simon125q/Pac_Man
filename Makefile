@@ -63,6 +63,7 @@ SOURCES       = Blinky.cpp \
 		Inky.cpp \
 		Level.cpp \
 		main.cpp \
+		MapTile.cpp \
 		PacMan.cpp \
 		Pellet.cpp \
 		Pinky.cpp \
@@ -88,6 +89,7 @@ OBJECTS       = Blinky.o \
 		Inky.o \
 		Level.o \
 		main.o \
+		MapTile.o \
 		PacMan.o \
 		Pellet.o \
 		Pinky.o \
@@ -190,6 +192,7 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		Ghost.h \
 		Inky.h \
 		Level.h \
+		MapTile.h \
 		PacMan.h \
 		Pellet.h \
 		Pinky.h \
@@ -205,6 +208,7 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		Inky.cpp \
 		Level.cpp \
 		main.cpp \
+		MapTile.cpp \
 		PacMan.cpp \
 		Pellet.cpp \
 		Pinky.cpp \
@@ -392,8 +396,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents Blinky.h Board.h BoostPellet.h BottomBar.h Clyde.h Entity.h Game.h Ghost.h Inky.h Level.h PacMan.h Pellet.h Pinky.h Score.h settings.h $(DISTDIR)/
-	$(COPY_FILE) --parents Blinky.cpp Board.cpp BoostPellet.cpp BottomBar.cpp Clyde.cpp Entity.cpp Game.cpp Ghost.cpp Inky.cpp Level.cpp main.cpp PacMan.cpp Pellet.cpp Pinky.cpp Score.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents Blinky.h Board.h BoostPellet.h BottomBar.h Clyde.h Entity.h Game.h Ghost.h Inky.h Level.h MapTile.h PacMan.h Pellet.h Pinky.h Score.h settings.h $(DISTDIR)/
+	$(COPY_FILE) --parents Blinky.cpp Board.cpp BoostPellet.cpp BottomBar.cpp Clyde.cpp Entity.cpp Game.cpp Ghost.cpp Inky.cpp Level.cpp main.cpp MapTile.cpp PacMan.cpp Pellet.cpp Pinky.cpp Score.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -462,6 +466,7 @@ moc_Game.cpp: Game.h \
 		BottomBar.h \
 		BoostPellet.h \
 		Pellet.h \
+		settings.h \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
 	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/simon/Documents/GitHub/Pac_Man/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/simon/Documents/GitHub/Pac_Man -I/home/simon/Documents/GitHub/Pac_Man -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include Game.h -o moc_Game.cpp
@@ -487,6 +492,7 @@ moc_Level.cpp: Level.h \
 		BottomBar.h \
 		BoostPellet.h \
 		Pellet.h \
+		settings.h \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
 	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/simon/Documents/GitHub/Pac_Man/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/simon/Documents/GitHub/Pac_Man -I/home/simon/Documents/GitHub/Pac_Man -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include Level.h -o moc_Level.cpp
@@ -530,8 +536,17 @@ Blinky.o: Blinky.cpp Blinky.h \
 		Entity.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Blinky.o Blinky.cpp
 
-Board.o: Board.cpp Board.h \
-		settings.h
+Board.o: Board.cpp Game.h \
+		Level.h \
+		PacMan.h \
+		Entity.h \
+		Ghost.h \
+		Score.h \
+		BottomBar.h \
+		BoostPellet.h \
+		Pellet.h \
+		settings.h \
+		Board.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Board.o Board.cpp
 
 BoostPellet.o: BoostPellet.cpp BoostPellet.h \
@@ -558,12 +573,12 @@ Game.o: Game.cpp Level.h \
 		BottomBar.h \
 		BoostPellet.h \
 		Pellet.h \
+		settings.h \
 		Blinky.h \
 		Inky.h \
 		Pinky.h \
 		Clyde.h \
-		Game.h \
-		settings.h
+		Game.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Game.o Game.cpp
 
 Ghost.o: Ghost.cpp Game.h \
@@ -591,12 +606,13 @@ Level.o: Level.cpp Level.h \
 		BottomBar.h \
 		BoostPellet.h \
 		Pellet.h \
+		settings.h \
 		Game.h \
 		Blinky.h \
 		Inky.h \
 		Pinky.h \
 		Clyde.h \
-		settings.h
+		MapTile.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Level.o Level.cpp
 
 main.o: main.cpp Game.h \
@@ -607,8 +623,13 @@ main.o: main.cpp Game.h \
 		Score.h \
 		BottomBar.h \
 		BoostPellet.h \
-		Pellet.h
+		Pellet.h \
+		settings.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o main.cpp
+
+MapTile.o: MapTile.cpp MapTile.h \
+		settings.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o MapTile.o MapTile.cpp
 
 PacMan.o: PacMan.cpp Ghost.h \
 		Entity.h \

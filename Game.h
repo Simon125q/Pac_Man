@@ -28,4 +28,5 @@ protected:
 friend class Ghost;
 friend class PacMan;
 friend class Level;
+friend class Board;
 };

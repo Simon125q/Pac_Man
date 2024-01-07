@@ -30,7 +30,7 @@ Game::Game(QWidget *parent)
     setScene(level);
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    setFixedSize(WIDTH, HEIGHT);
+    setFixedSize(WIDTH + 2, HEIGHT + 2);
 
     show();
 }
