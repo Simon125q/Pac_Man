@@ -7,7 +7,7 @@ Clyde::Clyde()
 {
     getFrames();
     setPixmap(QPixmap("resources/sprites/Clyde/RIGHT_2.png"));
-    speed = 7;
+    speed = 3;
 }
 
 void Clyde::getFrames()

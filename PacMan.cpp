@@ -23,7 +23,7 @@ PacMan::PacMan()
         getDeathFrames();
         direction = RIGHT;
         setPixmap(right[0]);
-        speed = 8;
+        speed = 4;
     }
 
 void PacMan::keyPressEvent(QKeyEvent *event)

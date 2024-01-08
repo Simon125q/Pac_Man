@@ -53,7 +53,6 @@ OBJECTS_DIR   = ./
 ####### Files
 
 SOURCES       = Blinky.cpp \
-		Board.cpp \
 		BoostPellet.cpp \
 		BottomBar.cpp \
 		Clyde.cpp \
@@ -79,7 +78,6 @@ SOURCES       = Blinky.cpp \
 		moc_Pellet.cpp \
 		moc_Pinky.cpp
 OBJECTS       = Blinky.o \
-		Board.o \
 		BoostPellet.o \
 		BottomBar.o \
 		Clyde.o \
@@ -183,7 +181,6 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/yacc.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/lex.prf \
 		Pac_Man.pro Blinky.h \
-		Board.h \
 		BoostPellet.h \
 		BottomBar.h \
 		Clyde.h \
@@ -198,7 +195,6 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		Pinky.h \
 		Score.h \
 		settings.h Blinky.cpp \
-		Board.cpp \
 		BoostPellet.cpp \
 		BottomBar.cpp \
 		Clyde.cpp \
@@ -396,8 +392,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents Blinky.h Board.h BoostPellet.h BottomBar.h Clyde.h Entity.h Game.h Ghost.h Inky.h Level.h MapTile.h PacMan.h Pellet.h Pinky.h Score.h settings.h $(DISTDIR)/
-	$(COPY_FILE) --parents Blinky.cpp Board.cpp BoostPellet.cpp BottomBar.cpp Clyde.cpp Entity.cpp Game.cpp Ghost.cpp Inky.cpp Level.cpp main.cpp MapTile.cpp PacMan.cpp Pellet.cpp Pinky.cpp Score.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents Blinky.h BoostPellet.h BottomBar.h Clyde.h Entity.h Game.h Ghost.h Inky.h Level.h MapTile.h PacMan.h Pellet.h Pinky.h Score.h settings.h $(DISTDIR)/
+	$(COPY_FILE) --parents Blinky.cpp BoostPellet.cpp BottomBar.cpp Clyde.cpp Entity.cpp Game.cpp Ghost.cpp Inky.cpp Level.cpp main.cpp MapTile.cpp PacMan.cpp Pellet.cpp Pinky.cpp Score.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -535,19 +531,6 @@ Blinky.o: Blinky.cpp Blinky.h \
 		Ghost.h \
 		Entity.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Blinky.o Blinky.cpp
-
-Board.o: Board.cpp Game.h \
-		Level.h \
-		PacMan.h \
-		Entity.h \
-		Ghost.h \
-		Score.h \
-		BottomBar.h \
-		BoostPellet.h \
-		Pellet.h \
-		settings.h \
-		Board.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Board.o Board.cpp
 
 BoostPellet.o: BoostPellet.cpp BoostPellet.h \
 		Pellet.h

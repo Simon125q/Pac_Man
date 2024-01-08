@@ -5,9 +5,9 @@
 #define FRIGHTENED 3
 #define TILE_W 16
 #define TILE_H 16
-#define TILE_ROWS 33
-#define TILE_COLS 30
-#define WIDTH ((TILE_COLS + 2) * TILE_W)
+#define TILE_ROWS 36
+#define TILE_COLS 28
+#define WIDTH ((TILE_COLS) * TILE_W)
 #define HEIGHT (TILE_ROWS * TILE_H)
 #define UP 1
 #define DOWN 2

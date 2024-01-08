@@ -16,7 +16,7 @@
 class Level : public QGraphicsScene
 {
     Q_OBJECT
-    int board[TILE_ROWS][TILE_COLS];
+    int board[TILE_COLS][TILE_ROWS];
 
 public:
     PacMan *player;

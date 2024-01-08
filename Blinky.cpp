@@ -7,7 +7,7 @@ Blinky::Blinky()
 {
     getFrames();
     setPixmap(QPixmap("resources/sprites/Blinky/RIGHT_2.png"));
-    speed = 7;
+    speed = 4;
 }
 
 void Blinky::getFrames()

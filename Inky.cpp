@@ -7,7 +7,7 @@ Inky::Inky()
 {
     getFrames();
     setPixmap(QPixmap("resources/sprites/Inky/RIGHT_2.png"));
-    speed = 6;
+    speed = 3;
 }
 
 void Inky::getFrames()

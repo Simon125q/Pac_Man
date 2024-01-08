@@ -6,7 +6,7 @@ BoostPellet::BoostPellet(int x, int y)
     :Pellet(x, y)
 {
     flickerTimer = 0;
-    setRect(0, 0, 20, 20);
+    setRect(0, 0, 16, 16);
 }
 
 void BoostPellet::flicker()

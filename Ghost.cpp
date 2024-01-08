@@ -14,7 +14,7 @@ Ghost::Ghost()
     modeTimer = new QTimer();
     QObject::connect(modeTimer, SIGNAL(timeout()), this, SLOT(enterChaseMode()));
     mode = CHASE;
-    speed = 6;
+    speed = 3;
 }
 
 void Ghost::getFrightenedFrames()
