@@ -54,12 +54,18 @@ void PacMan::checkCollisions()
     {
         if (typeid(*(colliding_items[i])) == typeid(Pellet))
         {
-            game->level->score->increase(100);
+            game->level->score->increase(25);
+            game->level->pelletLeft--;
+            if (game->level->pelletLeft == 0)
+                game->level->gameWon();
             delete colliding_items[i];
         }
         else if (typeid(*(colliding_items[i])) == typeid(BoostPellet))
         {
-            game->level->score->increase(550);
+            game->level->score->increase(50);
+            game->level->pelletLeft--;
+            if (game->level->pelletLeft == 0)
+                game->level->gameWon();
             game->level->startFrightenedMode();
             delete colliding_items[i];
         }
@@ -68,13 +74,14 @@ void PacMan::checkCollisions()
         {
             if (game->level->ghosts[0]->mode == FRIGHTENED)
             {
+                game->level->score->increase(99);
                 //TODO eating ghosts
             }
             else
             {
                 game->level->bottomBar->decreaseLifes();
                 if(game->level->bottomBar->getLifes() < 0)
-                    game->level->resetPositions();
+                    game->level->gameOver();
                 else
                     game->level->resetPositions();
             }

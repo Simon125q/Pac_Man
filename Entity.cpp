@@ -22,6 +22,10 @@ void Entity::move()
         setPos(x() - speed, y());
     if (direction == RIGHT && x() + boundingRect().width() < WIDTH)
         setPos(x() + speed, y());
+    if (direction == LEFT && x() <= 0)
+        setPos(WIDTH - speed, y());
+    if (direction == RIGHT && x() + boundingRect().width() >= WIDTH)
+        setPos(0 + speed, y());
 }
 
 void Entity::animate()

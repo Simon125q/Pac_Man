@@ -54,29 +54,25 @@ Level::Level(QWidget *parent) : QGraphicsScene(parent), board{
                                                             /*x26 */ {30, 30, 30, 8, 26, 26, 27, 26, 26, 26, 26, 26, 9, 30, 30, 30, 8, 30, 9, 30, 30, 30, 8, 26, 26, 26, 27, 11, 10, 26, 26, 26, 26, 9, 30, 30},
                                                             /*x27 */ {30, 30, 30, 4, 12, 12, 12, 12, 12, 12, 12, 12, 5, 30, 30, 30, 8, 30, 9, 30, 30, 30, 4, 12, 12, 12, 12, 25, 20, 12, 12, 12, 12, 5, 30, 30}}
 {
-    setSceneRect(0, 0, WIDTH + 2, HEIGHT + 2);
+    setSceneRect(0, 0, WIDTH, HEIGHT);
     gameLoopTimer = new QTimer();
+    pelletLeft = 0;
+    createBoard();
+    createPlayer();
+    createGhosts();
+    resetPositions();
+    createGUI();
+    
+    QObject::connect(gameLoopTimer, SIGNAL(timeout()), this, SLOT(updateLevel()));
+    gameLoopTimer->start(25);
+}
 
+void Level::createPlayer()
+{
     player = new PacMan();
     player->setFlag(QGraphicsItem::ItemIsFocusable);
     player->setFocus();
     addItem(player);
-
-    createBoard();
-    // createPellet();
-    createGhosts();
-    resetPositions();
-
-    score = new Score();
-    score->setPos(WIDTH / 2, score->y());
-    addItem(score);
-
-    bottomBar = new BottomBar();
-    bottomBar->setPos(WIDTH / 2, HEIGHT - 40);
-    addItem(bottomBar);
-
-    QObject::connect(gameLoopTimer, SIGNAL(timeout()), this, SLOT(updateLevel()));
-    gameLoopTimer->start(25);
 }
 
 void Level::createGhosts()
@@ -112,18 +108,17 @@ void Level::createBoard()
 {
     for (int y_pos = 0; y_pos < TILE_ROWS; y_pos++)
     {
-        std::cout << std::endl;
         for (int x_pos = 0; x_pos < TILE_COLS; x_pos++)
         {
             if (board[x_pos][y_pos] == 26)
             {
-                std::cout << "1, ";
+                pelletLeft++;
                 Pellet *p = new Pellet(x_pos * TILE_W, y_pos * TILE_H);
                 addItem(p);
             }
             else if (board[x_pos][y_pos] == 27)
             {
-                std::cout << "2, ";
+                pelletLeft++;
                 BoostPellet *p = new BoostPellet(x_pos * TILE_W, y_pos * TILE_H);
                 QObject::connect(gameLoopTimer, SIGNAL(timeout()), p, SLOT(flicker()));
                 addItem(p);
@@ -133,21 +128,22 @@ void Level::createBoard()
             }
             else
             {
-                std::cout << " , ";
                 MapTile *tile = new MapTile(board[x_pos][y_pos], x_pos, y_pos);
                 addItem(tile);
             }
-            // if (y_pos % 5 == 0 && x_pos % 5 == 0)
-            // {
-
-            // }
-            // else
-            // {
-            //     Pellet *p = new Pellet(y_pos * 40, x_pos * 40);
-            //     addItem(p);
-            // }
         }
     }
+}
+
+void Level::createGUI()
+{
+    score = new Score();
+    score->setPos(WIDTH / 2, score->y());
+    addItem(score);
+
+    bottomBar = new BottomBar();
+    bottomBar->setPos(WIDTH / 2, HEIGHT - 40);
+    addItem(bottomBar);
 }
 
 void Level::startFrightenedMode()
@@ -156,6 +152,16 @@ void Level::startFrightenedMode()
     {
         ghosts[ghost_index]->enterFrightenMode();
     }
+}
+
+void Level::gameOver()
+{
+    gameLoopTimer->stop();
+}
+
+void Level::gameWon()
+{
+    gameLoopTimer->stop();
 }
 
 void Level::updateLevel()

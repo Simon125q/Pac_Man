@@ -22,15 +22,20 @@ public:
     PacMan *player;
     QList<Ghost *> ghosts;
     QTimer *gameLoopTimer;
-
     Score *score;
     BottomBar *bottomBar;
+    int pelletLeft;
+    
     Level(QWidget *parent = 0);
 
     void createGhosts();
     void resetPositions();
     void createBoard();
+    void createPlayer();
+    void createGUI();
     void startFrightenedMode();
+    void gameOver();
+    void gameWon();
 public slots:
     void updateLevel();
 };
