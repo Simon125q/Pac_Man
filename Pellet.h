@@ -5,6 +5,8 @@
 class Pellet:public QObject, public QGraphicsEllipseItem
 {
     Q_OBJECT
+    
 public:
-    Pellet(int x, int y);
+    int pelletSize;
+    Pellet(int x, int y, int size);
 };

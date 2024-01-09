@@ -28,20 +28,28 @@ PacMan::PacMan()
 
 void PacMan::keyPressEvent(QKeyEvent *event)
 {
-    if (event->key() == Qt::Key_W)
+    if (event->key() == Qt::Key_W && canTurnUp())
     {
+        if (direction != UP)
+            setTilePos(getTileX(x()), getTileY(y()));
         direction = UP;
     }
-    else if (event->key() == Qt::Key_A)
+    else if (event->key() == Qt::Key_A && canTurnLeft())
     {
+        if (direction != LEFT)
+            setTilePos(getTileX(x()), getTileY(y()));
         direction = LEFT;
     }
-    else if (event->key() == Qt::Key_D)
+    else if (event->key() == Qt::Key_D && canTurnRight())
     {
+        if (direction != RIGHT)
+            setTilePos(getTileX(x()), getTileY(y()));
         direction = RIGHT;
     }
-    else if (event->key() == Qt::Key_S)
+    else if (event->key() == Qt::Key_S && canTurnDown())
     {
+        if (direction != DOWN)
+            setTilePos(getTileX(x()), getTileY(y()));
         direction = DOWN;
     }
 }
@@ -72,21 +80,41 @@ void PacMan::checkCollisions()
         else if (typeid(*(colliding_items[i])) == typeid(Inky) || typeid(*(colliding_items[i])) == typeid(Blinky) ||
             typeid(*(colliding_items[i])) == typeid(Pinky) || typeid(*(colliding_items[i])) == typeid(Clyde))
         {
-            if (game->level->ghosts[0]->mode == FRIGHTENED)
+            int ghost_index = 0;
+            if(typeid(Blinky) == typeid(*(colliding_items[i])))
             {
-                game->level->score->increase(99);
-                //TODO eating ghosts
+                ghost_index = 0;
             }
-            else
+            else if(typeid(Inky) == typeid(*(colliding_items[i])))
             {
-                game->level->bottomBar->decreaseLifes();
-                if(game->level->bottomBar->getLifes() < 0)
-                    game->level->gameOver();
-                else
-                    game->level->resetPositions();
+                ghost_index = 1;
             }
+            else if(typeid(Pinky) == typeid(*(colliding_items[i])))
+            {
+                ghost_index = 2;
+            }
+            else if(typeid(Clyde) == typeid(*(colliding_items[i])))
+            {
+                ghost_index = 3;
+            }
+            if (game->level->ghosts[ghost_index]->mode == FRIGHTENED)
+            {
+                game->level->score->increase(100);
+                game->level->ghosts[ghost_index]->enterEatenMode();
+            }
+            else if (game->level->ghosts[ghost_index]->mode != EATEN)
+                handleGhostHit();
         }
     }
+}
+
+void PacMan::handleGhostHit()
+{
+    game->level->bottomBar->decreaseLifes();
+    if(game->level->bottomBar->getLifes() < 0)
+        game->level->gameOver();
+    else
+        game->level->resetPositions();
 }
 
 void PacMan::getDeathFrames()
@@ -126,6 +154,7 @@ void animateDeath()
     animTimer->start(100);
 
 }
+
 
 void PacMan::update()
 {

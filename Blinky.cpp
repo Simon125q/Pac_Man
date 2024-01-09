@@ -1,13 +1,15 @@
 
+#include "Game.h"
 #include "Blinky.h"
 
+extern Game *game;
 
 Blinky::Blinky()
     : Ghost()
 {
     getFrames();
     setPixmap(QPixmap("resources/sprites/Blinky/RIGHT_2.png"));
-    speed = 4;
+    speed = 2;
 }
 
 void Blinky::getFrames()
@@ -20,4 +22,14 @@ void Blinky::getFrames()
     left.append(QPixmap("resources/sprites/Blinky/LEFT_2.png"));
     right.append(QPixmap("resources/sprites/Blinky/RIGHT_1.png"));
     right.append(QPixmap("resources/sprites/Blinky/RIGHT_2.png"));
+}
+
+void Blinky::getChaseDirection()
+{
+    getDirection(getTileX(game->getPlayerX()), getTileY(game->getPlayerY()));
+}
+
+void Blinky::getScatterDirection()
+{
+    getDirection(2, 4);
 }

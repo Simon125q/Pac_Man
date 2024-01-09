@@ -9,4 +9,7 @@ class Blinky : public Ghost
 public:
     Blinky();
     void getFrames();
+    void getChaseDirection();
+    void getScatterDirection();
+
 };

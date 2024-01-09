@@ -7,6 +7,7 @@ class Ghost : public Entity
     Q_OBJECT
     QList<QPixmap> frightenedFrames;
     QTimer *modeTimer;
+    QTimer *directionChangeTimer;
     
     void getFrightenedFrames();
 public:
@@ -17,11 +18,17 @@ public:
     virtual void getFrames() = 0;
 
 public slots:
-    void getChaseDirection();
+    void getDirection(int targetX, int targetY);
+    void getDirectionForX(int targetX, int targetY);
+    void getDirectionForY(int targetX, int targetY);
+    void getDirectionForBlockedWay();
+    virtual void getChaseDirection() = 0;
     void getFrightenedDirections();
-    void getScatterDirection();
-    void enterChaseMode();
+    virtual void getScatterDirection() = 0;
+    void getEatenDirection();
+    void leaveFrightenMode();
     void enterFrightenMode();
     void enterScatterMode();
+    void enterEatenMode();
     void update();
 };

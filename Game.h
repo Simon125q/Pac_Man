@@ -21,10 +21,14 @@ private:
 
 public:
     Game(QWidget *parent = 0);
+    int getPlayerX();
+    int getPlayerY();
+    int getPlayerDirection();
 
 protected:
     void keyPressEvent(QKeyEvent *event);
 
+friend class Entity;
 friend class Ghost;
 friend class PacMan;
 friend class Level;

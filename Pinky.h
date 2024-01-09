@@ -9,4 +9,6 @@ class Pinky : public Ghost
 public:
     Pinky();
     void getFrames();
+    void getChaseDirection();
+    void getScatterDirection();
 };

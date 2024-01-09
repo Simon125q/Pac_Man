@@ -38,4 +38,6 @@ public:
     void gameWon();
 public slots:
     void updateLevel();
+
+friend class Entity;
 };

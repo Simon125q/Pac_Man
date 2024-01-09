@@ -96,11 +96,14 @@ void Level::createGhosts()
 
 void Level::resetPositions()
 {
-    player->setPos(WIDTH / 4, HEIGHT / 4);
+    player->setTilePos(10, 8);
 
     for (int ghost_index = 0; ghost_index < ghosts.size(); ghost_index++)
     {
-        ghosts[ghost_index]->setPos(WIDTH / 2 + 50 * ghost_index, HEIGHT / 2);
+        if (ghost_index < 2)
+            ghosts[ghost_index]->setTilePos(TILE_COLS / 2 + ghost_index, TILE_ROWS / 2);
+        else
+            ghosts[ghost_index]->setTilePos(TILE_COLS / 2 + ghost_index - 2, TILE_ROWS / 2);
     }
 }
 
@@ -113,13 +116,13 @@ void Level::createBoard()
             if (board[x_pos][y_pos] == 26)
             {
                 pelletLeft++;
-                Pellet *p = new Pellet(x_pos * TILE_W, y_pos * TILE_H);
+                Pellet *p = new Pellet((x_pos * TILE_W) + TILE_W / 2, (y_pos * TILE_H) + TILE_H / 2, 8);
                 addItem(p);
             }
             else if (board[x_pos][y_pos] == 27)
             {
                 pelletLeft++;
-                BoostPellet *p = new BoostPellet(x_pos * TILE_W, y_pos * TILE_H);
+                BoostPellet *p = new BoostPellet((x_pos * TILE_W) + TILE_W / 2, (y_pos * TILE_H) + TILE_H / 2, 16);
                 QObject::connect(gameLoopTimer, SIGNAL(timeout()), p, SLOT(flicker()));
                 addItem(p);
             }

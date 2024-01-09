@@ -16,6 +16,7 @@ public:
     void keyPressEvent(QKeyEvent *event);
     void checkCollisions();
     void getFrames();
+    void handleGhostHit();
     void animateDeath();
 public slots:
     void update();

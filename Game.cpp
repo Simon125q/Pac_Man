@@ -35,6 +35,20 @@ Game::Game(QWidget *parent)
     show();
 }
 
+int Game::getPlayerX()
+{
+    return level->player->x();
+}
+
+int Game::getPlayerY()
+{
+    return level->player->y();
+}
+
+int Game::getPlayerDirection()
+{
+    return level->player->direction;
+}
 
 void Game::keyPressEvent(QKeyEvent *event)
 {

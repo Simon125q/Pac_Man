@@ -10,4 +10,6 @@ public:
 
     Inky();
     void getFrames();
+    void getChaseDirection();
+    void getScatterDirection();
 };

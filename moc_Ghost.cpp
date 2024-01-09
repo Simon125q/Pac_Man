@@ -22,8 +22,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_Ghost_t {
-    QByteArrayData data[9];
-    char stringdata0[126];
+    QByteArrayData data[17];
+    char stringdata0[251];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -33,20 +33,31 @@ struct qt_meta_stringdata_Ghost_t {
 static const qt_meta_stringdata_Ghost_t qt_meta_stringdata_Ghost = {
     {
 QT_MOC_LITERAL(0, 0, 5), // "Ghost"
-QT_MOC_LITERAL(1, 6, 17), // "getChaseDirection"
-QT_MOC_LITERAL(2, 24, 0), // ""
-QT_MOC_LITERAL(3, 25, 23), // "getFrightenedDirections"
-QT_MOC_LITERAL(4, 49, 19), // "getScatterDirection"
-QT_MOC_LITERAL(5, 69, 14), // "enterChaseMode"
-QT_MOC_LITERAL(6, 84, 17), // "enterFrightenMode"
-QT_MOC_LITERAL(7, 102, 16), // "enterScatterMode"
-QT_MOC_LITERAL(8, 119, 6) // "update"
+QT_MOC_LITERAL(1, 6, 12), // "getDirection"
+QT_MOC_LITERAL(2, 19, 0), // ""
+QT_MOC_LITERAL(3, 20, 7), // "targetX"
+QT_MOC_LITERAL(4, 28, 7), // "targetY"
+QT_MOC_LITERAL(5, 36, 16), // "getDirectionForX"
+QT_MOC_LITERAL(6, 53, 16), // "getDirectionForY"
+QT_MOC_LITERAL(7, 70, 25), // "getDirectionForBlockedWay"
+QT_MOC_LITERAL(8, 96, 17), // "getChaseDirection"
+QT_MOC_LITERAL(9, 114, 23), // "getFrightenedDirections"
+QT_MOC_LITERAL(10, 138, 19), // "getScatterDirection"
+QT_MOC_LITERAL(11, 158, 17), // "getEatenDirection"
+QT_MOC_LITERAL(12, 176, 17), // "leaveFrightenMode"
+QT_MOC_LITERAL(13, 194, 17), // "enterFrightenMode"
+QT_MOC_LITERAL(14, 212, 16), // "enterScatterMode"
+QT_MOC_LITERAL(15, 229, 14), // "enterEatenMode"
+QT_MOC_LITERAL(16, 244, 6) // "update"
 
     },
-    "Ghost\0getChaseDirection\0\0"
+    "Ghost\0getDirection\0\0targetX\0targetY\0"
+    "getDirectionForX\0getDirectionForY\0"
+    "getDirectionForBlockedWay\0getChaseDirection\0"
     "getFrightenedDirections\0getScatterDirection\0"
-    "enterChaseMode\0enterFrightenMode\0"
-    "enterScatterMode\0update"
+    "getEatenDirection\0leaveFrightenMode\0"
+    "enterFrightenMode\0enterScatterMode\0"
+    "enterEatenMode\0update"
 };
 #undef QT_MOC_LITERAL
 
@@ -56,7 +67,7 @@ static const uint qt_meta_data_Ghost[] = {
        8,       // revision
        0,       // classname
        0,    0, // classinfo
-       7,   14, // methods
+      13,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -64,15 +75,27 @@ static const uint qt_meta_data_Ghost[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags
-       1,    0,   49,    2, 0x0a /* Public */,
-       3,    0,   50,    2, 0x0a /* Public */,
-       4,    0,   51,    2, 0x0a /* Public */,
-       5,    0,   52,    2, 0x0a /* Public */,
-       6,    0,   53,    2, 0x0a /* Public */,
-       7,    0,   54,    2, 0x0a /* Public */,
-       8,    0,   55,    2, 0x0a /* Public */,
+       1,    2,   79,    2, 0x0a /* Public */,
+       5,    2,   84,    2, 0x0a /* Public */,
+       6,    2,   89,    2, 0x0a /* Public */,
+       7,    0,   94,    2, 0x0a /* Public */,
+       8,    0,   95,    2, 0x0a /* Public */,
+       9,    0,   96,    2, 0x0a /* Public */,
+      10,    0,   97,    2, 0x0a /* Public */,
+      11,    0,   98,    2, 0x0a /* Public */,
+      12,    0,   99,    2, 0x0a /* Public */,
+      13,    0,  100,    2, 0x0a /* Public */,
+      14,    0,  101,    2, 0x0a /* Public */,
+      15,    0,  102,    2, 0x0a /* Public */,
+      16,    0,  103,    2, 0x0a /* Public */,
 
  // slots: parameters
+    QMetaType::Void, QMetaType::Int, QMetaType::Int,    3,    4,
+    QMetaType::Void, QMetaType::Int, QMetaType::Int,    3,    4,
+    QMetaType::Void, QMetaType::Int, QMetaType::Int,    3,    4,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
@@ -90,17 +113,22 @@ void Ghost::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void 
         auto *_t = static_cast<Ghost *>(_o);
         (void)_t;
         switch (_id) {
-        case 0: _t->getChaseDirection(); break;
-        case 1: _t->getFrightenedDirections(); break;
-        case 2: _t->getScatterDirection(); break;
-        case 3: _t->enterChaseMode(); break;
-        case 4: _t->enterFrightenMode(); break;
-        case 5: _t->enterScatterMode(); break;
-        case 6: _t->update(); break;
+        case 0: _t->getDirection((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
+        case 1: _t->getDirectionForX((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
+        case 2: _t->getDirectionForY((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
+        case 3: _t->getDirectionForBlockedWay(); break;
+        case 4: _t->getChaseDirection(); break;
+        case 5: _t->getFrightenedDirections(); break;
+        case 6: _t->getScatterDirection(); break;
+        case 7: _t->getEatenDirection(); break;
+        case 8: _t->leaveFrightenMode(); break;
+        case 9: _t->enterFrightenMode(); break;
+        case 10: _t->enterScatterMode(); break;
+        case 11: _t->enterEatenMode(); break;
+        case 12: _t->update(); break;
         default: ;
         }
     }
-    (void)_a;
 }
 
 QT_INIT_METAOBJECT const QMetaObject Ghost::staticMetaObject = { {
@@ -132,13 +160,13 @@ int Ghost::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 7)
+        if (_id < 13)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 7;
+        _id -= 13;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 7)
+        if (_id < 13)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 7;
+        _id -= 13;
     }
     return _id;
 }

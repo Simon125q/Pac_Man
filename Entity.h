@@ -21,8 +21,20 @@ public:
     QList<QPixmap> down;
     QList<QPixmap> right;
     QList<QPixmap> left;
+    QList<int> moveableTiles;
 
     Entity(QGraphicsItem *parent = 0);
+    void setTilePos(int x, int y);
+    int getTileX(int x);
+    int getTileY(int y);
+    bool canTurnUp();
+    bool canTurnDown();
+    bool canTurnRight();
+    bool canTurnLeft();
+    bool canMoveUp();
+    bool canMoveDown();
+    bool canMoveRight();
+    bool canMoveLeft();
     virtual void getFrames() = 0;
     void animate();
 

@@ -1,13 +1,14 @@
-
+#include "Game.h"
 #include "Inky.h"
 
+extern Game *game;
 
 Inky::Inky()
     : Ghost()
 {
     getFrames();
     setPixmap(QPixmap("resources/sprites/Inky/RIGHT_2.png"));
-    speed = 3;
+    speed = 2;
 }
 
 void Inky::getFrames()
@@ -20,4 +21,14 @@ void Inky::getFrames()
     left.append(QPixmap("resources/sprites/Inky/LEFT_2.png"));
     right.append(QPixmap("resources/sprites/Inky/RIGHT_1.png"));
     right.append(QPixmap("resources/sprites/Inky/RIGHT_2.png"));
+}
+
+void Inky::getChaseDirection()
+{
+    getDirection(getTileX(game->getPlayerX()), getTileY(game->getPlayerY()));
+}
+
+void Inky::getScatterDirection()
+{
+    getDirection(2, 20);
 }

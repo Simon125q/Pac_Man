@@ -8,7 +8,7 @@ class BoostPellet: public Pellet
     int flickerTimer;
     
 public:
-    BoostPellet(int x, int y);
+    BoostPellet(int x, int y, int size);
 public slots:
     void flicker();
 };

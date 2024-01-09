@@ -9,4 +9,6 @@ class Clyde : public Ghost
 public:
     Clyde();
     void getFrames();
+    void getChaseDirection();
+    void getScatterDirection();
 };

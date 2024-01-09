@@ -2,11 +2,11 @@
 
 #include "BoostPellet.h"
 
-BoostPellet::BoostPellet(int x, int y)
-    :Pellet(x, y)
+BoostPellet::BoostPellet(int x, int y, int size)
+    :Pellet(x, y, size)
 {
     flickerTimer = 0;
-    setRect(0, 0, 16, 16);
+    //setRect(0, 0, pelletSize, pelletSize);
 }
 
 void BoostPellet::flicker()
