@@ -8,7 +8,7 @@ Score::Score(QGraphicsItem *parent)
 
     setPlainText(QString("Score: ") + QString::number(score));
     setDefaultTextColor(Qt::white);
-    setFont(QFont("times", 16));
+    setFont(QFont("times", 20));
 }
 
 void Score::increase(int byNum)

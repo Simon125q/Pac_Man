@@ -13,6 +13,6 @@ int main(int argc, char *argv[])
 
     game = new Game();
     game->show();
-    
+
     return app.exec();
 }

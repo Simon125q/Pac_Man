@@ -15,7 +15,7 @@
 extern Game *game;
 
 EndScreen::EndScreen(bool isGameWon, QWidget *parent)
-    :QWidget(parent)
+    : QWidget(parent)
 {
     setPalette(QPalette(QColor(0, 20, 20)));
     setAutoFillBackground(true);

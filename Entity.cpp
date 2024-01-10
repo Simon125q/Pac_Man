@@ -14,9 +14,9 @@ Entity::Entity(QGraphicsItem *parent)
 {
     timeBetFrame = 0;
     animationFrame = 0;
-    moveableTiles.append(26);
-    moveableTiles.append(27);
-    moveableTiles.append(30);
+    moveableTiles.append(PELLET_TILE);
+    moveableTiles.append(BOOST_PELLET_TILE);
+    moveableTiles.append(EMPTY_TILE);
 }
 
 void Entity::setTilePos(int x, int y)
@@ -102,10 +102,8 @@ bool Entity::canMoveDown()
 
 bool Entity::canMoveRight()
 {
-    
     int tileX = getTileX(this->x() + boundingRect().width() / 2 + speed);
     int tileY = getTileY(this->y());
-    //std::cout<<"checking right: X - "<<tileX<<" Y - "<<tileY<<std::endl;
     int checkTileType = game->level->board[tileX][tileY];
     if (moveableTiles.contains(checkTileType))
         return true;
@@ -142,7 +140,7 @@ void Entity::move()
 
 void Entity::animate()
 {
-    if (timeBetFrame == 4)
+    if (timeBetFrame == TIME_BETWEEN_ANIMATION_FRAMES)
     {
         timeBetFrame = 0;
         animationFrame++;

@@ -28,7 +28,7 @@ public:
     BottomBar *bottomBar;
     EndScreen *endScreen;
     int pelletLeft;
-    
+
     Level(QWidget *parent = 0);
 
     void createGhosts();
@@ -42,5 +42,5 @@ public:
 public slots:
     void updateLevel();
 
-friend class Entity;
+    friend class Entity;
 };

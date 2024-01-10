@@ -8,8 +8,8 @@ Blinky::Blinky()
     : Ghost()
 {
     getFrames();
-    setPixmap(QPixmap("resources/sprites/Blinky/RIGHT_2.png"));
-    speed = 2;
+    setPixmap(up[0]);
+    speed = GHOST_INIT_SPEED;
 }
 
 void Blinky::getFrames()

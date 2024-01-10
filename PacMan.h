@@ -11,6 +11,7 @@ class PacMan : public Entity
     Q_OBJECT
     QList<QPixmap> deathFrames;
     void getDeathFrames();
+
 public:
     PacMan();
     void keyPressEvent(QKeyEvent *event);

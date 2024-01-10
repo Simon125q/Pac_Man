@@ -25,13 +25,13 @@ void Pinky::getFrames()
 void Pinky::getChaseDirection()
 {
     if (game->getPlayerDirection() == UP)
-        getDirection(getTileX(game->getPlayerX()), getTileY(game->getPlayerY()) - 4);
+        getDirection(getTileX(game->getPlayerX()), getTileY(game->getPlayerY()) - PINKY_FRONT_SIGHT);
     else if (game->getPlayerDirection() == DOWN)
-        getDirection(getTileX(game->getPlayerX()), getTileY(game->getPlayerY()) + 4);
+        getDirection(getTileX(game->getPlayerX()), getTileY(game->getPlayerY()) + PINKY_FRONT_SIGHT);
     else if (game->getPlayerDirection() == RIGHT)
-        getDirection(getTileX(game->getPlayerX()) + 4, getTileY(game->getPlayerY()));
+        getDirection(getTileX(game->getPlayerX()) + PINKY_FRONT_SIGHT, getTileY(game->getPlayerY()));
     else if (game->getPlayerDirection() == LEFT)
-        getDirection(getTileX(game->getPlayerX()) - 4, getTileY(game->getPlayerY()) - 4);
+        getDirection(getTileX(game->getPlayerX()) - PINKY_FRONT_SIGHT, getTileY(game->getPlayerY()) - PINKY_FRONT_SIGHT);
 }
 
 void Pinky::getScatterDirection()

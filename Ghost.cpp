@@ -1,5 +1,7 @@
 #include <cstdlib>
 #include <ctime>
+#include <iostream>
+#include <stdlib.h>
 #include <QObject>
 #include "Game.h"
 #include "Ghost.h"
@@ -13,12 +15,16 @@ Ghost::Ghost()
 {
     getFrightenedFrames();
     modeTimer = new QTimer();
+    scatterTimer = new QTimer();
     directionChangeTimer = new QTimer();
     QObject::connect(modeTimer, SIGNAL(timeout()), this, SLOT(leaveFrightenMode()));
+    QObject::connect(scatterTimer, SIGNAL(timeout()), this, SLOT(enterScatterMode()));
+    QObject::connect(modeTimer, SIGNAL(timeout()), this, SLOT(leaveScatterMode()));
     QObject::connect(directionChangeTimer, SIGNAL(timeout()), directionChangeTimer, SLOT(stop()));
+    scatterTimer->start(TIME_BETWEEN_SCATTERS);
     mode = CHASE;
-    speed = 2;
-    moveableTiles.append(31);
+    speed = GHOST_INIT_SPEED;
+    moveableTiles.append(CAGE_ENTRY_TILE);
     srand((unsigned)time(0));
 }
 
@@ -48,7 +54,7 @@ void Ghost::getDirectionForX(int targetX, int targetY)
         if (direction != RIGHT)
         {
             setTilePos(getTileX(x()), getTileY(y()));
-            directionChangeTimer->start(250);
+            directionChangeTimer->start(DIRECTION_CHANGE_COOLDOWN);
         }
         direction = RIGHT;
     }
@@ -57,7 +63,7 @@ void Ghost::getDirectionForX(int targetX, int targetY)
         if (direction != LEFT)
         {
             setTilePos(getTileX(x()), getTileY(y()));
-            directionChangeTimer->start(250);
+            directionChangeTimer->start(DIRECTION_CHANGE_COOLDOWN);
         }
         direction = LEFT;
     }
@@ -66,7 +72,7 @@ void Ghost::getDirectionForX(int targetX, int targetY)
         if (direction != DOWN)
         {
             setTilePos(getTileX(x()), getTileY(y()));
-            directionChangeTimer->start(250);
+            directionChangeTimer->start(DIRECTION_CHANGE_COOLDOWN);
         }
         direction = DOWN;
     }
@@ -75,7 +81,7 @@ void Ghost::getDirectionForX(int targetX, int targetY)
         if (direction != UP)
         {
             setTilePos(getTileX(x()), getTileY(y()));
-            directionChangeTimer->start(250);
+            directionChangeTimer->start(DIRECTION_CHANGE_COOLDOWN);
         }
         direction = UP;
     }
@@ -90,7 +96,7 @@ void Ghost::getDirectionForY(int targetX, int targetY)
         if (direction != DOWN)
         {
             setTilePos(getTileX(x()), getTileY(y()));
-            directionChangeTimer->start(250);
+            directionChangeTimer->start(DIRECTION_CHANGE_COOLDOWN);
         }
         direction = DOWN;
     }
@@ -99,7 +105,7 @@ void Ghost::getDirectionForY(int targetX, int targetY)
         if (direction != UP)
         {
             setTilePos(getTileX(x()), getTileY(y()));
-            directionChangeTimer->start(250);
+            directionChangeTimer->start(DIRECTION_CHANGE_COOLDOWN);
         }
         direction = UP;
     }
@@ -108,7 +114,7 @@ void Ghost::getDirectionForY(int targetX, int targetY)
         if (direction != RIGHT)
         {
             setTilePos(getTileX(x()), getTileY(y()));
-            directionChangeTimer->start(250);
+            directionChangeTimer->start(DIRECTION_CHANGE_COOLDOWN);
         }
         direction = RIGHT;
     }
@@ -117,7 +123,7 @@ void Ghost::getDirectionForY(int targetX, int targetY)
         if (direction != LEFT)
         {
             setTilePos(getTileX(x()), getTileY(y()));
-            directionChangeTimer->start(250);
+            directionChangeTimer->start(DIRECTION_CHANGE_COOLDOWN);
         }
         direction = LEFT;
     }
@@ -132,7 +138,7 @@ void Ghost::getDirectionForBlockedWay()
         if (direction != RIGHT)
         {
             setTilePos(getTileX(x()), getTileY(y()));
-            directionChangeTimer->start(250);
+            directionChangeTimer->start(DIRECTION_CHANGE_COOLDOWN);
         }
         direction = RIGHT;
     }
@@ -141,7 +147,7 @@ void Ghost::getDirectionForBlockedWay()
         if (direction != LEFT)
         {
             setTilePos(getTileX(x()), getTileY(y()));
-            directionChangeTimer->start(250);
+            directionChangeTimer->start(DIRECTION_CHANGE_COOLDOWN);
         }
         direction = LEFT;
     }
@@ -150,7 +156,7 @@ void Ghost::getDirectionForBlockedWay()
         if (direction != DOWN)
         {
             setTilePos(getTileX(x()), getTileY(y()));
-            directionChangeTimer->start(250);
+            directionChangeTimer->start(DIRECTION_CHANGE_COOLDOWN);
         }
         direction = DOWN;
     }
@@ -159,7 +165,7 @@ void Ghost::getDirectionForBlockedWay()
         if (direction != UP)
         {
             setTilePos(getTileX(x()), getTileY(y()));
-            directionChangeTimer->start(250);
+            directionChangeTimer->start(DIRECTION_CHANGE_COOLDOWN);
         }
         direction = UP;
     }
@@ -179,7 +185,7 @@ void Ghost::getFrightenedDirections()
             else
                 return;
             setTilePos(getTileX(x()), getTileY(y()));
-            directionChangeTimer->start(250);
+            directionChangeTimer->start(DIRECTION_CHANGE_COOLDOWN);
         }
         else if (((direction == LEFT || direction == RIGHT) && (canTurnUp() || canTurnDown())))
         {
@@ -191,7 +197,7 @@ void Ghost::getFrightenedDirections()
             else
                 return;
             setTilePos(getTileX(x()), getTileY(y()));
-            directionChangeTimer->start(250);
+            directionChangeTimer->start(DIRECTION_CHANGE_COOLDOWN);
         }
     }
 }
@@ -205,12 +211,12 @@ void Ghost::getOutOfCageDirection()
 {
     getDirection(13, 14);
     mode = CHASE;
-    speed = 2;
+    speed = GHOST_INIT_SPEED;
 }
 
 void Ghost::enterFrightenMode()
 {
-    modeTimer->start(4000);
+    modeTimer->start(FRIGHTENED_MODE_DURATION);
     mode = FRIGHTENED;
     if (direction == UP)
         direction = DOWN;
@@ -228,13 +234,13 @@ void Ghost::leaveFrightenMode()
     {
         modeTimer->stop();
         mode = CHASE;
-        speed = 2;
+        speed = GHOST_INIT_SPEED;
     }
 }
 
 void Ghost::enterScatterMode()
 {
-    modeTimer->start(3500);
+    modeTimer->start(SCATTER_MODE_DURATION);
     mode = SCATTER;
 }
 
@@ -244,19 +250,19 @@ void Ghost::leaveScatterMode()
     {
         modeTimer->stop();
         mode = CHASE;
-        speed = 2;
+        speed = GHOST_INIT_SPEED;
     }
 }
 
 void Ghost::enterEatenMode()
 {
     mode = EATEN;
-    speed = 5;
+    speed = GHOST_EATEN_SPEED;
 }
 
 void Ghost::animateFrightened()
 {
-    if (timeBetFrame == 4)
+    if (timeBetFrame == TIME_BETWEEN_ANIMATION_FRAMES)
     {
         timeBetFrame = 0;
         animationFrame++;

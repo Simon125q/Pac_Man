@@ -3,7 +3,7 @@
 #include <QPushButton>
 #include <QLabel>
 
-class EndScreen: public QWidget
+class EndScreen : public QWidget
 {
 public:
     QPushButton *exit;

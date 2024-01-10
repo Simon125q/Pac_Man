@@ -7,12 +7,14 @@ class Ghost : public Entity
     Q_OBJECT
     QList<QPixmap> frightenedFrames;
     QTimer *modeTimer;
+    QTimer *scatterTimer;
     QTimer *directionChangeTimer;
-    
+
     void getFrightenedFrames();
+
 public:
     int mode;
-    
+
     Ghost();
     void animateFrightened();
     virtual void getFrames() = 0;
@@ -29,6 +31,7 @@ public slots:
     void getOutOfCageDirection();
     void leaveFrightenMode();
     void enterFrightenMode();
+    void leaveScatterMode();
     void enterScatterMode();
     void enterEatenMode();
     bool isInCage();

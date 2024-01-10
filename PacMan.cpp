@@ -18,13 +18,14 @@
 extern Game *game;
 
 PacMan::PacMan()
-    : Entity() {
-        getFrames();
-        getDeathFrames();
-        direction = RIGHT;
-        setPixmap(right[0]);
-        speed = 4;
-    }
+    : Entity()
+{
+    getFrames();
+    getDeathFrames();
+    direction = RIGHT;
+    setPixmap(right[0]);
+    speed = PLAYER_SPEED;
+}
 
 void PacMan::keyPressEvent(QKeyEvent *event)
 {
@@ -62,7 +63,7 @@ void PacMan::checkCollisions()
     {
         if (typeid(*(colliding_items[i])) == typeid(Pellet))
         {
-            game->level->score->increase(25);
+            game->level->score->increase(PELLET_POINTS);
             game->level->pelletLeft--;
             if (game->level->pelletLeft == 0)
                 game->level->gameWon();
@@ -70,7 +71,7 @@ void PacMan::checkCollisions()
         }
         else if (typeid(*(colliding_items[i])) == typeid(BoostPellet))
         {
-            game->level->score->increase(50);
+            game->level->score->increase(BOOST_PELLET_POINTS);
             game->level->pelletLeft--;
             if (game->level->pelletLeft == 0)
                 game->level->gameWon();
@@ -78,28 +79,28 @@ void PacMan::checkCollisions()
             delete colliding_items[i];
         }
         else if (typeid(*(colliding_items[i])) == typeid(Inky) || typeid(*(colliding_items[i])) == typeid(Blinky) ||
-            typeid(*(colliding_items[i])) == typeid(Pinky) || typeid(*(colliding_items[i])) == typeid(Clyde))
+                 typeid(*(colliding_items[i])) == typeid(Pinky) || typeid(*(colliding_items[i])) == typeid(Clyde))
         {
             int ghost_index = 0;
-            if(typeid(Blinky) == typeid(*(colliding_items[i])))
+            if (typeid(Blinky) == typeid(*(colliding_items[i])))
             {
-                ghost_index = 0;
+                ghost_index = BLINKY_INDEX;
             }
-            else if(typeid(Inky) == typeid(*(colliding_items[i])))
+            else if (typeid(Inky) == typeid(*(colliding_items[i])))
             {
-                ghost_index = 1;
+                ghost_index = INKY_INDEX;
             }
-            else if(typeid(Pinky) == typeid(*(colliding_items[i])))
+            else if (typeid(Pinky) == typeid(*(colliding_items[i])))
             {
-                ghost_index = 2;
+                ghost_index = PINKY_INDEX;
             }
-            else if(typeid(Clyde) == typeid(*(colliding_items[i])))
+            else if (typeid(Clyde) == typeid(*(colliding_items[i])))
             {
-                ghost_index = 3;
+                ghost_index = CLYDE_INDEX;
             }
             if (game->level->ghosts[ghost_index]->mode == FRIGHTENED)
             {
-                game->level->score->increase(100);
+                game->level->score->increase(GHOST_EATEN_POINTS);
                 game->level->ghosts[ghost_index]->enterEatenMode();
             }
             else if (game->level->ghosts[ghost_index]->mode != EATEN)
@@ -111,7 +112,7 @@ void PacMan::checkCollisions()
 void PacMan::handleGhostHit()
 {
     game->level->bottomBar->decreaseLifes();
-    if(game->level->bottomBar->getLifes() < 0)
+    if (game->level->bottomBar->getLifes() < 0)
         game->level->gameOver();
     else
         game->level->resetPositions();
@@ -152,9 +153,7 @@ void animateDeath()
 {
     QTimer *animTimer = new QTimer;
     animTimer->start(100);
-
 }
-
 
 void PacMan::update()
 {

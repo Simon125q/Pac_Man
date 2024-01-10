@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include "Ghost.h"
 
 class Clyde : public Ghost

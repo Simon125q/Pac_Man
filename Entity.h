@@ -10,7 +10,7 @@ class Entity : public QObject, public QGraphicsPixmapItem
 {
 private:
     Q_OBJECT
-    
+
 public:
     int direction;
     int speed;

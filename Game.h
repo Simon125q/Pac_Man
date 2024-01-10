@@ -29,10 +29,10 @@ public:
 protected:
     void keyPressEvent(QKeyEvent *event);
 
-friend class Entity;
-friend class Ghost;
-friend class Inky;
-friend class PacMan;
-friend class Level;
-friend class Board;
+    friend class Entity;
+    friend class Ghost;
+    friend class Inky;
+    friend class PacMan;
+    friend class Level;
+    friend class Board;
 };

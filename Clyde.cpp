@@ -7,8 +7,8 @@ Clyde::Clyde()
     : Ghost()
 {
     getFrames();
-    setPixmap(QPixmap("resources/sprites/Clyde/RIGHT_2.png"));
-    speed = 2;
+    setPixmap(up[0]);
+    speed = GHOST_INIT_SPEED;
 }
 
 void Clyde::getFrames()
@@ -25,14 +25,13 @@ void Clyde::getFrames()
 
 void Clyde::getChaseDirection()
 {
-    if ((getTileX(game->getPlayerX()) + 4 < getTileX(x()) || getTileX(game->getPlayerX()) - 4 > getTileX(x())) &&
-     (getTileY(game->getPlayerY()) + 4 < getTileY(y()) || getTileY(game->getPlayerY()) - 4 > getTileY(y())))
+    if ((getTileX(game->getPlayerX()) + CLYDE_SCATTER_RANGE < getTileX(x()) || getTileX(game->getPlayerX()) - CLYDE_SCATTER_RANGE > getTileX(x())) &&
+        (getTileY(game->getPlayerY()) + CLYDE_SCATTER_RANGE < getTileY(y()) || getTileY(game->getPlayerY()) - CLYDE_SCATTER_RANGE > getTileY(y())))
     {
         getDirection(getTileX(game->getPlayerX()), getTileY(game->getPlayerY()));
     }
     else
         getScatterDirection();
-        
 }
 
 void Clyde::getScatterDirection()

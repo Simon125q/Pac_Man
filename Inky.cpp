@@ -7,8 +7,8 @@ Inky::Inky()
     : Ghost()
 {
     getFrames();
-    setPixmap(QPixmap("resources/sprites/Inky/RIGHT_2.png"));
-    speed = 2;
+    setPixmap(up[0]);
+    speed = GHOST_INIT_SPEED;
 }
 
 void Inky::getFrames()
@@ -27,26 +27,26 @@ void Inky::getChaseDirection()
 {
     int playerFrontX = 0;
     int playerFrontY = 0;
-    int blinkyFrontX = getTileX(game->level->ghosts[0]->x());
-    int blinkyFrontY = getTileY(game->level->ghosts[0]->y());
+    int blinkyFrontX = getTileX(game->level->ghosts[CLYDE_INDEX]->x());
+    int blinkyFrontY = getTileY(game->level->ghosts[CLYDE_INDEX]->y());
     if (game->getPlayerDirection() == UP)
     {
-        playerFrontX = getTileX(game->getPlayerX()); 
+        playerFrontX = getTileX(game->getPlayerX());
         playerFrontY = getTileY(game->getPlayerY()) - 2;
     }
     else if (game->getPlayerDirection() == DOWN)
     {
-        playerFrontX = getTileX(game->getPlayerX()); 
+        playerFrontX = getTileX(game->getPlayerX());
         playerFrontY = getTileY(game->getPlayerY()) + 2;
     }
     else if (game->getPlayerDirection() == RIGHT)
     {
-        playerFrontX = getTileX(game->getPlayerX()) + 2; 
+        playerFrontX = getTileX(game->getPlayerX()) + 2;
         playerFrontY = getTileY(game->getPlayerY());
     }
     else if (game->getPlayerDirection() == LEFT)
     {
-        playerFrontX = getTileX(game->getPlayerX()) - 2; 
+        playerFrontX = getTileX(game->getPlayerX()) - 2;
         playerFrontY = getTileY(game->getPlayerY()) - 2;
     }
     getDirection(playerFrontX + (playerFrontX - blinkyFrontX), playerFrontY + (playerFrontY - blinkyFrontY));

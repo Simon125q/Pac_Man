@@ -1,17 +1,17 @@
 #include <QBrush>
 
 #include "BoostPellet.h"
+#include "settings.h"
 
 BoostPellet::BoostPellet(int x, int y, int size)
-    :Pellet(x, y, size)
+    : Pellet(x, y, size)
 {
     flickerTimer = 0;
-    //setRect(0, 0, pelletSize, pelletSize);
 }
 
 void BoostPellet::flicker()
 {
-    if (flickerTimer != 0 && flickerTimer % 10 == 0)
+    if (flickerTimer != 0 && flickerTimer % BOOST_PELLET_FLICKER_DURATION == 0)
     {
         flickerTimer = 0;
         setBrush(QBrush(Qt::black));
@@ -21,5 +21,4 @@ void BoostPellet::flicker()
         flickerTimer++;
         setBrush(QBrush(Qt::yellow));
     }
-    
 }

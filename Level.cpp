@@ -65,7 +65,7 @@ Level::Level(QWidget *parent) : QGraphicsScene(parent), board{
     createGUI();
 
     QObject::connect(gameLoopTimer, SIGNAL(timeout()), this, SLOT(updateLevel()));
-    gameLoopTimer->start(25);
+    gameLoopTimer->start(GAME_LOOP_TICK_DURATION);
 }
 
 void Level::createPlayer()
@@ -97,7 +97,7 @@ void Level::createGhosts()
 
 void Level::resetPositions()
 {
-    player->setTilePos(10, 8);
+    player->setTilePos(PLAYER_START_X, PLAYER_START_Y);
     player->direction = RIGHT;
 
     for (int ghost_index = 0; ghost_index < ghosts.size(); ghost_index++)
@@ -116,20 +116,20 @@ void Level::createBoard()
     {
         for (int x_pos = 0; x_pos < TILE_COLS; x_pos++)
         {
-            if (board[x_pos][y_pos] == 26)
+            if (board[x_pos][y_pos] == PELLET_TILE)
             {
                 pelletLeft++;
-                Pellet *p = new Pellet((x_pos * TILE_W) + TILE_W / 2, (y_pos * TILE_H) + TILE_H / 2, 8);
+                Pellet *p = new Pellet((x_pos * TILE_W) + TILE_W / 2, (y_pos * TILE_H) + TILE_H / 2, PELLET_SIZE);
                 addItem(p);
             }
-            else if (board[x_pos][y_pos] == 27)
+            else if (board[x_pos][y_pos] == BOOST_PELLET_TILE)
             {
                 pelletLeft++;
-                BoostPellet *p = new BoostPellet((x_pos * TILE_W) + TILE_W / 2, (y_pos * TILE_H) + TILE_H / 2, 16);
+                BoostPellet *p = new BoostPellet((x_pos * TILE_W) + TILE_W / 2, (y_pos * TILE_H) + TILE_H / 2, BOOST_PELLET_SIZE);
                 QObject::connect(gameLoopTimer, SIGNAL(timeout()), p, SLOT(flicker()));
                 addItem(p);
             }
-            else if (board[x_pos][y_pos] == 30)
+            else if (board[x_pos][y_pos] == EMPTY_TILE)
             {
             }
             else
@@ -144,7 +144,7 @@ void Level::createBoard()
 void Level::createGUI()
 {
     score = new Score();
-    score->setPos(WIDTH / 2, score->y());
+    score->setPos(WIDTH / 2 - 50, score->y());
     addItem(score);
 
     bottomBar = new BottomBar();
