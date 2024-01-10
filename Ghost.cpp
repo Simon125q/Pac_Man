@@ -181,7 +181,7 @@ void Ghost::getFrightenedDirections()
             setTilePos(getTileX(x()), getTileY(y()));
             directionChangeTimer->start(250);
         }
-        else if(((direction == LEFT || direction == RIGHT) && (canTurnUp() || canTurnDown())))
+        else if (((direction == LEFT || direction == RIGHT) && (canTurnUp() || canTurnDown())))
         {
             int turn = rand() % 3;
             if (turn == 1)
@@ -194,18 +194,19 @@ void Ghost::getFrightenedDirections()
             directionChangeTimer->start(250);
         }
     }
-    
 }
 
 void Ghost::getEatenDirection()
 {
-    if (getTileX(x()) == getTileX(WIDTH / 2) && getTileY(y()) == getTileY(HEIGHT / 2))
-    {
-        mode = CHASE;
-        speed = 2;
-    }
-    else
-        getDirection(getTileX(WIDTH / 2), getTileY(HEIGHT / 2));
+    
+    getDirection(getTileX(WIDTH / 2), getTileY(HEIGHT / 2));
+}
+
+void Ghost::getOutOfCageDirection()
+{
+    getDirection(13, 14);
+    mode = CHASE;
+    speed = 2;
 }
 
 void Ghost::enterFrightenMode()
@@ -258,9 +259,26 @@ void Ghost::animateFrightened()
     timeBetFrame++;
 }
 
+bool Ghost::isInCage()
+{
+    int tileX = getTileX(x());
+    int tileY = getTileY(y());
+
+    if ((tileY == 16 || tileY == 17 || tileY == 18) &&
+        (tileX == 11 || tileX == 12 || tileX == 13 || tileX == 14 || tileX == 15 || tileX == 16))
+        return true;
+    else
+        return false;
+}
+
 void Ghost::update()
 {
-    if (mode == CHASE)
+    if (isInCage())
+    {
+        getOutOfCageDirection();
+        animate();
+    }
+    else if (mode == CHASE)
     {
         getChaseDirection();
         animate();

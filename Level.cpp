@@ -25,7 +25,7 @@
 extern Game *game;
 
 Level::Level(QWidget *parent) : QGraphicsScene(parent), board{
-                                                            // y=>                 0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35
+                                                            // y=>   0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35
                                                             /*x0 */ {30, 30, 30, 0, 13, 13, 13, 13, 13, 13, 13, 13, 1, 30, 30, 30, 8, 30, 9, 30, 30, 30, 0, 13, 13, 13, 13, 17, 28, 13, 13, 13, 13, 1, 30, 30},
                                                             /*x1 */ {30, 30, 30, 8, 26, 26, 27, 26, 26, 26, 26, 26, 9, 30, 30, 30, 8, 30, 9, 30, 30, 30, 8, 26, 26, 26, 27, 11, 10, 26, 26, 26, 26, 9, 30, 30},
                                                             /*x2 */ {30, 30, 30, 8, 26, 2, 14, 3, 26, 2, 3, 26, 9, 30, 30, 30, 8, 30, 9, 30, 30, 30, 8, 26, 2, 3, 26, 6, 7, 26, 2, 3, 26, 9, 30, 30},
@@ -98,6 +98,7 @@ void Level::createGhosts()
 void Level::resetPositions()
 {
     player->setTilePos(10, 8);
+    player->direction = RIGHT;
 
     for (int ghost_index = 0; ghost_index < ghosts.size(); ghost_index++)
     {
@@ -105,6 +106,7 @@ void Level::resetPositions()
             ghosts[ghost_index]->setTilePos(TILE_COLS / 2 + ghost_index, TILE_ROWS / 2);
         else
             ghosts[ghost_index]->setTilePos(TILE_COLS / 2 + ghost_index - 2, TILE_ROWS / 2);
+        ghosts[ghost_index]->direction = UP;
     }
 }
 
@@ -170,7 +172,7 @@ void Level::gameWon()
 {
     gameLoopTimer->stop();
     endScreen = new EndScreen(true);
-    endScreen->move(WIDTH / 2 - 90, HEIGHT / 2 - 100);
+    endScreen->move(WIDTH / 2 - 120, HEIGHT / 2 - 100);
     addWidget(endScreen);
 }
 

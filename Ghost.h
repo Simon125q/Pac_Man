@@ -26,9 +26,11 @@ public slots:
     void getFrightenedDirections();
     virtual void getScatterDirection() = 0;
     void getEatenDirection();
+    void getOutOfCageDirection();
     void leaveFrightenMode();
     void enterFrightenMode();
     void enterScatterMode();
     void enterEatenMode();
+    bool isInCage();
     void update();
 };
