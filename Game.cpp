@@ -50,6 +50,11 @@ int Game::getPlayerDirection()
     return level->player->direction;
 }
 
+int Game::getScore()
+{
+    return level->score->getScore();
+}
+
 void Game::keyPressEvent(QKeyEvent *event)
 {
     if (event->key() == Qt::Key_Escape)

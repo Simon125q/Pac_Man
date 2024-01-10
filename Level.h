@@ -5,6 +5,7 @@
 #include <QGraphicsScene>
 #include <QTimer>
 #include <QList>
+#include <QPushButton>
 
 #include "PacMan.h"
 #include "Ghost.h"
@@ -12,6 +13,7 @@
 #include "BottomBar.h"
 #include "BoostPellet.h"
 #include "settings.h"
+#include "EndScreen.h"
 
 class Level : public QGraphicsScene
 {
@@ -24,6 +26,7 @@ public:
     QTimer *gameLoopTimer;
     Score *score;
     BottomBar *bottomBar;
+    EndScreen *endScreen;
     int pelletLeft;
     
     Level(QWidget *parent = 0);

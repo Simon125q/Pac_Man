@@ -20,6 +20,7 @@
 #include "Score.h"
 #include "BottomBar.h"
 #include "MapTile.h"
+#include "EndScreen.h"
 
 extern Game *game;
 
@@ -62,7 +63,7 @@ Level::Level(QWidget *parent) : QGraphicsScene(parent), board{
     createGhosts();
     resetPositions();
     createGUI();
-    
+
     QObject::connect(gameLoopTimer, SIGNAL(timeout()), this, SLOT(updateLevel()));
     gameLoopTimer->start(25);
 }
@@ -160,11 +161,17 @@ void Level::startFrightenedMode()
 void Level::gameOver()
 {
     gameLoopTimer->stop();
+    endScreen = new EndScreen(false);
+    endScreen->move(WIDTH / 2 - 90, HEIGHT / 2 - 100);
+    addWidget(endScreen);
 }
 
 void Level::gameWon()
 {
     gameLoopTimer->stop();
+    endScreen = new EndScreen(true);
+    endScreen->move(WIDTH / 2 - 90, HEIGHT / 2 - 100);
+    addWidget(endScreen);
 }
 
 void Level::updateLevel()

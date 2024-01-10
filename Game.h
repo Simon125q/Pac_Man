@@ -24,6 +24,7 @@ public:
     int getPlayerX();
     int getPlayerY();
     int getPlayerDirection();
+    int getScore();
 
 protected:
     void keyPressEvent(QKeyEvent *event);
