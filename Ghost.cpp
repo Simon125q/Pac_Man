@@ -198,7 +198,6 @@ void Ghost::getFrightenedDirections()
 
 void Ghost::getEatenDirection()
 {
-    
     getDirection(getTileX(WIDTH / 2), getTileY(HEIGHT / 2));
 }
 
@@ -211,7 +210,7 @@ void Ghost::getOutOfCageDirection()
 
 void Ghost::enterFrightenMode()
 {
-    modeTimer->start(3500);
+    modeTimer->start(4000);
     mode = FRIGHTENED;
     if (direction == UP)
         direction = DOWN;
@@ -235,9 +234,18 @@ void Ghost::leaveFrightenMode()
 
 void Ghost::enterScatterMode()
 {
-
-    modeTimer->start(3000);
+    modeTimer->start(3500);
     mode = SCATTER;
+}
+
+void Ghost::leaveScatterMode()
+{
+    if (mode == SCATTER)
+    {
+        modeTimer->stop();
+        mode = CHASE;
+        speed = 2;
+    }
 }
 
 void Ghost::enterEatenMode()

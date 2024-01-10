@@ -31,6 +31,7 @@ protected:
 
 friend class Entity;
 friend class Ghost;
+friend class Inky;
 friend class PacMan;
 friend class Level;
 friend class Board;

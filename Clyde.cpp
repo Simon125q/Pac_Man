@@ -37,5 +37,5 @@ void Clyde::getChaseDirection()
 
 void Clyde::getScatterDirection()
 {
-    getDirection(20, 4);
+    getDirection(0, TILE_ROWS);
 }

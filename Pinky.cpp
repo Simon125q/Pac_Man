@@ -36,5 +36,5 @@ void Pinky::getChaseDirection()
 
 void Pinky::getScatterDirection()
 {
-    getDirection(20, 20);
+    getDirection(0, 0);
 }

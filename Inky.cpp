@@ -25,10 +25,34 @@ void Inky::getFrames()
 
 void Inky::getChaseDirection()
 {
-    getDirection(getTileX(game->getPlayerX()), getTileY(game->getPlayerY()));
+    int playerFrontX = 0;
+    int playerFrontY = 0;
+    int blinkyFrontX = getTileX(game->level->ghosts[0]->x());
+    int blinkyFrontY = getTileY(game->level->ghosts[0]->y());
+    if (game->getPlayerDirection() == UP)
+    {
+        playerFrontX = getTileX(game->getPlayerX()); 
+        playerFrontY = getTileY(game->getPlayerY()) - 2;
+    }
+    else if (game->getPlayerDirection() == DOWN)
+    {
+        playerFrontX = getTileX(game->getPlayerX()); 
+        playerFrontY = getTileY(game->getPlayerY()) + 2;
+    }
+    else if (game->getPlayerDirection() == RIGHT)
+    {
+        playerFrontX = getTileX(game->getPlayerX()) + 2; 
+        playerFrontY = getTileY(game->getPlayerY());
+    }
+    else if (game->getPlayerDirection() == LEFT)
+    {
+        playerFrontX = getTileX(game->getPlayerX()) - 2; 
+        playerFrontY = getTileY(game->getPlayerY()) - 2;
+    }
+    getDirection(playerFrontX + (playerFrontX - blinkyFrontX), playerFrontY + (playerFrontY - blinkyFrontY));
 }
 
 void Inky::getScatterDirection()
 {
-    getDirection(2, 20);
+    getDirection(TILE_COLS, TILE_ROWS);
 }

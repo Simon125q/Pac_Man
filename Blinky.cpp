@@ -31,5 +31,5 @@ void Blinky::getChaseDirection()
 
 void Blinky::getScatterDirection()
 {
-    getDirection(2, 4);
+    getDirection(TILE_COLS, 0);
 }
