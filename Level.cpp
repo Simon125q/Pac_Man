@@ -148,8 +148,8 @@ void Level::createGUI()
     addItem(score);
 
     bottomBar = new BottomBar();
-    bottomBar->setPos(WIDTH / 2, HEIGHT - 40);
-    addItem(bottomBar);
+    for (int life_index = 0; life_index < bottomBar->pixLifes.size(); life_index++)
+        addItem(bottomBar->pixLifes[life_index]);
 }
 
 void Level::startFrightenedMode()

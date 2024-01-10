@@ -1,13 +1,17 @@
 #pragma once
 
 #include <QGraphicsTextItem>
+#include <QGraphicsPixmapItem>
+#include <QList>
 
-class BottomBar : public QGraphicsTextItem
+class BottomBar
 {
     int lifes;
 
 public:
-    BottomBar(QGraphicsItem *parent = 0);
+    QList<QGraphicsPixmapItem *> pixLifes;
+
+    BottomBar();
     void decreaseLifes();
     int getLifes();
 };

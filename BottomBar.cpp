@@ -1,21 +1,29 @@
 #include <QFont>
+#include <QGraphicsPixmapItem>
 #include "BottomBar.h"
 #include "settings.h"
 
-BottomBar::BottomBar(QGraphicsItem *parent)
-    : QGraphicsTextItem(parent)
+BottomBar::BottomBar()
 {
     lifes = PLAYER_INIT_LIFES;
 
-    setPlainText(QString::number(lifes));
-    setDefaultTextColor(Qt::white);
-    setFont(QFont("times", 16));
+    for (int life = 0; life < lifes; life++)
+    {
+        QGraphicsPixmapItem *l = new QGraphicsPixmapItem();
+        l->setPixmap(QPixmap("resources/sprites/PacMan/RIGHT_2.png"));
+        l->setPos(life * TILE_W, (TILE_ROWS - 1) * TILE_H);
+        pixLifes.append(l);
+    }
 }
 
 void BottomBar::decreaseLifes()
 {
     lifes--;
-    setPlainText(QString::number(lifes));
+    if (lifes >= 0)
+    {
+        delete pixLifes.last();
+        pixLifes.pop_back();
+    }
 }
 
 int BottomBar::getLifes()
