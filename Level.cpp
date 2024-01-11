@@ -80,19 +80,18 @@ void Level::createGhosts()
 {
     Blinky *blinky = new Blinky();
     ghosts.append(blinky);
-    addItem(blinky);
 
     Inky *inky = new Inky();
     ghosts.append(inky);
-    addItem(inky);
 
     Pinky *pinky = new Pinky();
     ghosts.append(pinky);
-    addItem(pinky);
 
     Clyde *clyde = new Clyde();
     ghosts.append(clyde);
-    addItem(clyde);
+
+    for (int ghost_index = 0; ghost_index < ghosts.size(); ghost_index++)
+        addItem(ghosts[ghost_index]);
 }
 
 void Level::resetPositions()
