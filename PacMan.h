@@ -11,6 +11,7 @@ class PacMan : public Entity
     Q_OBJECT
     QList<QPixmap> deathFrames;
     void getDeathFrames();
+    int nextKey;
 
 public:
     PacMan();
@@ -19,6 +20,7 @@ public:
     void getFrames();
     void handleGhostHit();
     void animateDeath();
+    void checkKeysQueue();
 public slots:
     void update();
 };

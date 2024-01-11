@@ -4,7 +4,7 @@
 #define SCATTER 2
 #define FRIGHTENED 3
 #define EATEN 4
-#define GHOST_INIT_SPEED 2
+#define GHOST_INIT_SPEED 1
 #define GHOST_EATEN_SPEED 5
 #define TIME_BETWEEN_SCATTERS 35000
 #define DIRECTION_CHANGE_COOLDOWN 250
@@ -19,7 +19,7 @@
 
 #define PLAYER_START_X 10
 #define PLAYER_START_Y 8
-#define PLAYER_SPEED 4
+#define PLAYER_SPEED 2
 #define PLAYER_INIT_LIFES 3
 
 #define GAME_LOOP_TICK_DURATION 25
@@ -49,3 +49,7 @@
 #define BOOST_PELLET_TILE 27
 #define EMPTY_TILE 30
 
+#define W_KEY 1
+#define A_KEY 2
+#define S_KEY 3
+#define D_KEY 4

@@ -23,31 +23,52 @@ PacMan::PacMan()
     getFrames();
     getDeathFrames();
     direction = RIGHT;
+    nextKey = D_KEY;
     setPixmap(right[0]);
     speed = PLAYER_SPEED;
 }
 
 void PacMan::keyPressEvent(QKeyEvent *event)
 {
-    if (event->key() == Qt::Key_W && canTurnUp())
+    if (event->key() == Qt::Key_W)
+    {
+        nextKey = W_KEY;
+    }
+    else if (event->key() == Qt::Key_A)
+    {
+        nextKey = A_KEY;
+    }
+    else if (event->key() == Qt::Key_D)
+    {
+        nextKey = D_KEY;
+    }
+    else if (event->key() == Qt::Key_S)
+    {
+        nextKey = S_KEY;
+    }
+}
+
+void PacMan::checkKeysQueue()
+{
+    if (nextKey == W_KEY && canTurnUp())
     {
         if (direction != UP)
             setTilePos(getTileX(x()), getTileY(y()));
         direction = UP;
     }
-    else if (event->key() == Qt::Key_A && canTurnLeft())
+    else if (nextKey == A_KEY && canTurnLeft())
     {
         if (direction != LEFT)
             setTilePos(getTileX(x()), getTileY(y()));
         direction = LEFT;
     }
-    else if (event->key() == Qt::Key_D && canTurnRight())
+    else if (nextKey == D_KEY && canTurnRight())
     {
         if (direction != RIGHT)
             setTilePos(getTileX(x()), getTileY(y()));
         direction = RIGHT;
     }
-    else if (event->key() == Qt::Key_S && canTurnDown())
+    else if (nextKey == S_KEY && canTurnDown())
     {
         if (direction != DOWN)
             setTilePos(getTileX(x()), getTileY(y()));
@@ -157,6 +178,7 @@ void animateDeath()
 
 void PacMan::update()
 {
+    checkKeysQueue();
     checkCollisions();
     animate();
     move();

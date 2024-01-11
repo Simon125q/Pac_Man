@@ -548,10 +548,12 @@ Blinky.o: Blinky.cpp Game.h \
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Blinky.o Blinky.cpp
 
 BoostPellet.o: BoostPellet.cpp BoostPellet.h \
-		Pellet.h
+		Pellet.h \
+		settings.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o BoostPellet.o BoostPellet.cpp
 
-BottomBar.o: BottomBar.cpp BottomBar.h
+BottomBar.o: BottomBar.cpp BottomBar.h \
+		settings.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o BottomBar.o BottomBar.cpp
 
 Clyde.o: Clyde.cpp Game.h \
@@ -568,7 +570,17 @@ Clyde.o: Clyde.cpp Game.h \
 		Clyde.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Clyde.o Clyde.cpp
 
-EndScreen.o: EndScreen.cpp EndScreen.h
+EndScreen.o: EndScreen.cpp EndScreen.h \
+		Game.h \
+		Level.h \
+		PacMan.h \
+		Entity.h \
+		Ghost.h \
+		Score.h \
+		BottomBar.h \
+		BoostPellet.h \
+		Pellet.h \
+		settings.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o EndScreen.o EndScreen.cpp
 
 Entity.o: Entity.cpp Game.h \
